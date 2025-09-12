@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/core/utils/AppColors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/router/routes.dart';
+import 'package:store_app/features/common/widgets/custom_text_button.dart';
+
+import '../../../core/utils/app_color.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
@@ -19,11 +25,39 @@ class OnBoardingPage extends StatelessWidget {
                 fontSize: 64,
                 fontWeight: FontWeight.w600,
                 fontFamily: "GeneralSans",
-                height: 0.8
+                height: 0.8,
               ),
+            ),
+            SvgPicture.asset('assets/onboarding_vector.svg', width: 390.w),
 
+            Align(
+              alignment: Alignment.topRight,
+              child: Image.asset('assets/human.png'),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                height: 107.h,
+                decoration: BoxDecoration(color: AppColors.white),
+              ),
             ),
 
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 31.0),
+                child: CustomTextButton(
+                  onPressed: () {
+                    context.go(Routes.signup);
+                  },
+                  title: "Get Started",
+                  backgroundColor: AppColors.primary,
+                  titleColor: AppColors.white,
+                  rightIcon: "assets/arrow-right.svg",
+                ),
+              ),
+            ),
           ],
         ),
       ),

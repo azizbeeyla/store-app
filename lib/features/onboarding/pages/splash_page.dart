@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/router/routes.dart';
-import 'package:store_app/core/utils/AppColors.dart';
+
+import '../../../core/utils/app_color.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
