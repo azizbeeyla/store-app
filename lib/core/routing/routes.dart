@@ -1,0 +1,9 @@
+class Routes{
+  static const  splash='/splash';
+  static const  onboarding='/onboarding';
+  static const  signup='/signup';
+  static const  login='/login';
+  static const  forgotPassword='/forgotPassword';
+  static const  resetCode='/resetCode';
+  static const  resetPassword='/resetPassword';
+}

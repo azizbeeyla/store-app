@@ -26,44 +26,47 @@ class CustomTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 341.w,
-      height: 54.h,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          side: borderColor != null
-              ? BorderSide(color: borderColor!)
-              : BorderSide.none,
-          backgroundColor: isDisabled
-              ? Colors.grey.shade400
-              : backgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-        ),
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (leftIcon != null) ...[
-              SvgPicture.asset(leftIcon!, width: 20.w, height: 20.h),
-              SizedBox(width: 10.w),
-            ],
-            Text(
-              title,
-              style: TextStyle(
-                color: titleColor,
-                fontSize: 16.sp,
-                fontFamily: "GeneralSans",
-                fontWeight: FontWeight.w500,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 24.0),
+      child: SizedBox(
+        width: 341.w,
+        height: 54.h,
+        child: TextButton(
+          style: TextButton.styleFrom(
+            side: borderColor != null
+                ? BorderSide(color: borderColor!)
+                : BorderSide.none,
+            backgroundColor: isDisabled
+                ? Colors.grey.shade400
+                : backgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r),
             ),
-            if (rightIcon != null) ...[
-              SizedBox(width: 10.w),
-              SvgPicture.asset(rightIcon!, width: 20.w, height: 20.h),
+          ),
+          onPressed: onPressed,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (leftIcon != null) ...[
+                SvgPicture.asset(leftIcon!, width: 20.w, height: 20.h),
+                SizedBox(width: 10.w),
+              ],
+              Text(
+                title,
+                style: TextStyle(
+                  color: titleColor,
+                  fontSize: 16.sp,
+                  fontFamily: "GeneralSans",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (rightIcon != null) ...[
+                SizedBox(width: 10.w),
+                SvgPicture.asset(rightIcon!, width: 20.w, height: 20.h),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
   });
 
+
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
@@ -85,24 +86,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 fontWeight: FontWeight.w400,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(
                   color: isValid ? Colors.green : AppColors.hintColor,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(
                   color: isValid ? Colors.green : AppColors.hintColor,
                   width: 2,
                 ),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: const BorderSide(color: Colors.red, width: 2),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: const BorderSide(color: Colors.red, width: 2),
               ),
               suffixIcon: widget.isPassword

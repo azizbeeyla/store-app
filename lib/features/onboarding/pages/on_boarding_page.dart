@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/core/router/routes.dart';
 import 'package:store_app/features/common/widgets/custom_text_button.dart';
 
+import '../../../core/routing/routes.dart';
 import '../../../core/utils/app_color.dart';
 
 class OnBoardingPage extends StatelessWidget {
@@ -15,17 +15,20 @@ class OnBoardingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Padding(
-        padding: const EdgeInsets.only(top: 59.0, left: 24),
+        padding: const EdgeInsets.only(top: 59.0, ),
         child: Stack(
           children: [
-            Text(
-              "Define yourself in your unique way.",
-              style: TextStyle(
-                color: AppColors.primary,
-                fontSize: 64,
-                fontWeight: FontWeight.w600,
-                fontFamily: "GeneralSans",
-                height: 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 24.0),
+              child: Text(
+                "Define yourself in your unique way.",
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 64,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "GeneralSans",
+                  height: 0.8,
+                ),
               ),
             ),
             SvgPicture.asset('assets/onboarding_vector.svg', width: 390.w),

@@ -1,35 +1,33 @@
-// sign_up_page.dart
+// login_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
+import 'package:store_app/features/authentication/widgets/already_text.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/utils/app_color.dart';
-import '../../../data/model/auth_model/register_model.dart';
+import '../../../data/model/auth_model/login_model.dart';
 import '../../../data/repository/auth_repository.dart';
 import '../../common/widgets/custom_text_button.dart';
-import '../managers/register_view_model.dart';
+import '../managers/login_view_model.dart';
 import '../widgets/custom_textfield.dart';
 import '../widgets/text_detail_widget.dart';
 import '../widgets/or_widget.dart';
-import '../widgets/already_text.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
-
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+ 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  late final RegisterViewModel _viewModel;
+  late final LoginViewModel _viewModel;
   bool _vmInitialized = false;
   bool isFormValid = false;
 
@@ -44,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
     super.didChangeDependencies();
     if (!_vmInitialized) {
       final repo = Provider.of<AuthRepository>(context, listen: false);
-      _viewModel = RegisterViewModel(registerRepo: repo);
+      _viewModel = LoginViewModel(authRepo: repo);
       _vmInitialized = true;
     }
   }
@@ -52,7 +50,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     _viewModel.dispose();
-    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -60,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RegisterViewModel>.value(
+    return ChangeNotifierProvider<LoginViewModel>.value(
       value: _viewModel,
       child: Scaffold(
         backgroundColor: AppColors.white,
@@ -75,17 +72,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextDetailWidget(
-                    title: 'Create an account',
-                    description: "Let’s create your account.",
+                    title: 'Login to Your Account',
+                    description: "It’s great to see you again.",
                   ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    label: 'Full Name',
-
-                    hintText: "Enter your full name",
-                    controller: nameController,
-
-                  ),
+                  SizedBox(height: 16.h),
                   CustomTextField(
                     label: 'Email',
                     hintText: "Enter your email address",
@@ -97,37 +87,48 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: passwordController,
                     isPassword: true,
                   ),
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 10.h),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24.0),
+                    child: AlreadyAccountText(
+                      prefixText: "Forgot your password? ",
+                      actionText: "Reset your password",
+                      onActionTap: () {
+                        context.push(Routes.forgotPassword);
+                      },
+                    ),
+                  ),
 
                   SizedBox(height: 24.h),
 
-                  Consumer<RegisterViewModel>(
+                  Consumer<LoginViewModel>(
                     builder: (context, vm, child) {
                       return CustomTextButton(
-                        title: vm.isLoading ? "Loading..." : "Create an Account",
-                        backgroundColor:
-                        isFormValid ? AppColors.primary : AppColors.grey,
+                        title: vm.isLoading ? "Loading..." : "Login",
+                        backgroundColor: isFormValid
+                            ? AppColors.primary
+                            : AppColors.grey,
                         titleColor: AppColors.white,
                         borderColor: isFormValid ? null : AppColors.textColor,
                         onPressed: isFormValid && !vm.isLoading
                             ? () async {
-                          if (_formKey.currentState!.validate()) {
-                            final model = AuthModel(
-                              fullName: nameController.text,
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-                            await vm.register(model);
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  final model = LoginModel(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
+                                  await vm.login(model);
 
-                            if (vm.success) {
-                              context.push(Routes.login);
-                            } else if (vm.error != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(vm.error!)),
-                              );
-                            }
-                          }
-                        }
+                                  if (vm.success) {
+                                    context.go(Routes.signup);
+                                  } else if (vm.error != null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(vm.error!)),
+                                    );
+                                  }
+                                }
+                              }
                             : null,
                       );
                     },
@@ -135,9 +136,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   SizedBox(height: 24.h),
                   OrWidget(),
-                  SizedBox(height: 24.h,),
+                  SizedBox(height: 24.h),
                   CustomTextButton(
-                    title: "Sign Up with Google ",
+                    title: "Login with Google",
                     backgroundColor: AppColors.white,
                     titleColor: AppColors.primary,
                     borderColor: AppColors.grey,
@@ -145,17 +146,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(height: 16.h),
                   CustomTextButton(
-                    title: "Sign Up with Facebook ",
+                    title: "Login with Facebook",
                     backgroundColor: AppColors.blue,
                     titleColor: AppColors.white,
                     leftIcon: 'assets/logos_facebook.svg',
                   ),
-                  SizedBox(height: 48.h),
 
+                  SizedBox(height: 164.h),
                   Center(
-                    child: AlreadyAccountText(onActionTap: () {
-                      context.push(Routes.login);
-                    }, prefixText: 'Already have an account?', actionText: 'Log In',),
+                    child: AlreadyAccountText(
+                      prefixText: "Don’t have an account? ",
+                      actionText: "Join",
+                    ),
                   ),
                 ],
               ),

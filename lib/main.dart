@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:store_app/core/router/router.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:store_app/data/repository/reset_repository.dart';
+
+import 'core/client/dio_client.dart';
+import 'core/interceptor.dart';
+import 'core/routing/router.dart';
+import 'data/repository/auth_repository.dart';
 
 void main() {
   runApp(const StoreApp());
@@ -16,9 +23,36 @@ class StoreApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: router,
+        return MultiProvider(
+          providers: [
+            Provider<FlutterSecureStorage>(
+              create: (_) => const FlutterSecureStorage(),
+            ),
+
+            Provider<AuthInterceptor>(
+              create: (context) => AuthInterceptor(
+                secureStorage: context.read<FlutterSecureStorage>(),
+              ),
+            ),
+
+            Provider<ApiClient>(
+              create: (context) =>
+                  ApiClient(interceptor: context.read<AuthInterceptor>()),
+            ),
+
+            Provider<AuthRepository>(
+              create: (context) => AuthRepository(
+                apiClient: context.read<ApiClient>(),
+              ),
+            ),
+            Provider(create: (context)=>ResetRepository(apiClient: context.read()) )
+
+
+          ],
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: router,
+          ),
         );
       },
     );

@@ -1,10 +1,19 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../core/utils/app_color.dart';
 
 class AlreadyAccountText extends StatelessWidget {
-  const AlreadyAccountText({super.key});
+  final String prefixText;
+  final String actionText;
+  final VoidCallback? onActionTap;
+
+  const AlreadyAccountText({
+    super.key,
+    required this.prefixText,
+    required this.actionText,
+    this.onActionTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +28,9 @@ class AlreadyAccountText extends StatelessWidget {
           color: AppColors.primary,
         ),
         children: [
-          const TextSpan(text: "Already have an account? "),
+          TextSpan(text: prefixText),
           TextSpan(
-            text: "Log In",
+            text: actionText,
             style: TextStyle(
               fontFamily: "GeneralSans",
               fontWeight: FontWeight.w500,
@@ -30,6 +39,7 @@ class AlreadyAccountText extends StatelessWidget {
               decoration: TextDecoration.underline,
               color: AppColors.primary,
             ),
+            recognizer: TapGestureRecognizer()..onTap = onActionTap,
           ),
         ],
       ),

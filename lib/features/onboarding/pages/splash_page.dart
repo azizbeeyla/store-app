@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/core/router/routes.dart';
 
+import '../../../core/routing/routes.dart';
 import '../../../core/utils/app_color.dart';
 
 class SplashPage extends StatefulWidget {
