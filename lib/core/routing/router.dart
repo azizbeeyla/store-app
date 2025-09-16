@@ -6,6 +6,7 @@ import 'package:store_app/features/authentication/pages/forgot_password_page.dar
 import 'package:store_app/features/authentication/pages/reset_code_page.dart';
 import 'package:store_app/features/authentication/pages/reset_password_page.dart';
 import 'package:store_app/features/authentication/pages/sign_up_page.dart';
+import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/onboarding/pages/on_boarding_page.dart';
 import 'package:store_app/features/onboarding/pages/splash_page.dart';
 
@@ -49,6 +50,10 @@ final router = GoRouter(
         GoRoute(
           path: Routes.resetPassword,
           builder: (context, state) => ResetPasswordPage(),
+        ),
+        GoRoute(
+          path: Routes.homePage,
+          builder: (context, state) => HomePage(),
         ),
       ],
     ),

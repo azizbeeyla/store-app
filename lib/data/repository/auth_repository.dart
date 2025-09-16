@@ -10,7 +10,6 @@ class AuthRepository {
 
   AuthRepository({required ApiClient apiClient}) : _apiClient = apiClient;
 
-  /// Register 
   Future<Result<Map<String, dynamic>>> register(AuthModel model) async {
     final result = await _apiClient.post(
       "/auth/register",
@@ -32,7 +31,6 @@ class AuthRepository {
     );
   }
 
-  /// Login
   Future<Result<Map<String, dynamic>>> login(LoginModel model) async {
     final result = await _apiClient.post(
       "/auth/login",

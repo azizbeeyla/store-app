@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,13 +15,26 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4),(){
+    _checkAuth();
+  }
 
-context.go(Routes.onboarding);
-    });
+  Future<void> _checkAuth() async {
+    final token = await _secureStorage.read(key: "token");
+
+    await Future.delayed(const Duration(seconds: 4));
+
+    if (!mounted) return;
+
+    if (token != null && token.isNotEmpty) {
+      context.go(Routes.homePage);
+    } else {
+      context.go(Routes.onboarding);
+    }
   }
 
   @override
@@ -39,7 +53,6 @@ context.go(Routes.onboarding);
               fit: BoxFit.cover,
             ),
           ),
-
           Center(
             child: SvgPicture.asset(
               'assets/splash_element.svg',

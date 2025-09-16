@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:store_app/data/repository/category_repository.dart';
+import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
 
 import 'core/client/dio_client.dart';
@@ -45,9 +47,16 @@ class StoreApp extends StatelessWidget {
                 apiClient: context.read<ApiClient>(),
               ),
             ),
-            Provider(create: (context)=>ResetRepository(apiClient: context.read()) )
-
-
+            Provider(
+              create: (context) => ResetRepository(apiClient: context.read()),
+            ),
+            Provider(
+              create: (context) => ProductRepository(apiClient: context.read()),
+            ),
+            Provider(
+              create: (context) =>
+                  CategoryRepository(apiClient: context.read()),
+            ),
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
