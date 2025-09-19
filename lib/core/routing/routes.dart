@@ -7,4 +7,9 @@ class Routes{
   static const  resetCode='/resetCode';
   static const  resetPassword='/resetPassword';
   static const  homePage='/homePage';
+  static const  savedPage='/savedPage';
+  static const  accountPage='/accountPage';
+  static const  searchPage='/searchPage';
+  static const  cardPage='/cardPage';
+
 }

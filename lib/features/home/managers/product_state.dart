@@ -8,12 +8,11 @@ class ProductState extends Equatable {
   final int? categoryId;
 
   const ProductState({
-     this.isLoading=false,
-     this.products=const [],
-     this.errorMessage,
-     this.categoryId,
+    this.isLoading = false,
+    this.products = const [],
+    this.errorMessage,
+    this.categoryId,
   });
-
 
   ProductState copyWith({
     bool? isLoading,

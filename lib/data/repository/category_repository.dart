@@ -11,13 +11,12 @@ class CategoryRepository {
     final result = await _apiClient.get("/categories/list");
 
     return result.fold(
-          (err) => Result.error(err),
+          (e) => Result.error(e),
           (data) {
         if (data is List) {
           final categories = data
               .map((json) => CategoryModel.fromJson(json))
-              .toList()
-              .cast<CategoryModel>();
+              .toList();
           return Result.ok(categories);
         }
         return Result.error(Exception("Xato javob formati"));

@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                   await vm.login(model);
 
                                   if (vm.success) {
-                                    context.go(Routes.signup);
+                                    context.go(Routes.homePage);
                                   } else if (vm.error != null) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(vm.error!)),

@@ -7,13 +7,18 @@ import '../../../data/model/category_model.dart';
 class CategoryItem extends StatelessWidget {
   final CategoryModel category;
   final bool isSelected;
+
   final VoidCallback onTap;
+  final Color titleColor;
+  final Color backgroundColor;
 
   const CategoryItem({
     super.key,
     required this.category,
     required this.isSelected,
     required this.onTap,
+    required this.titleColor,
+    required this.backgroundColor,
   });
 
   @override
@@ -21,17 +26,17 @@ class CategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.w),
+        margin: EdgeInsets.only(right: 8.w),
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 7),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.white,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: AppColors.hintColor),
         ),
         child: Text(
           category.title,
           style: TextStyle(
-            color: isSelected ? AppColors.white : AppColors.primary,
+            color:titleColor,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

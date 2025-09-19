@@ -14,14 +14,82 @@ class ProductCubit extends Cubit<ProductState> {
     final result = await _productRepo.getProductsByCategory(categoryId);
 
     result.fold(
-      (e) => emit(state.copyWith(errorMessage: e.toString(), isLoading: false)),
-
-      (date) {
-
+      (e) => emit(
+        state.copyWith(
+          errorMessage: e.toString(),
+          isLoading: false,
+        ),
+      ),
+      (data) {
         emit(
+          state.copyWith(
+            isLoading: false,
+            products: data,
+            errorMessage: null,
+            categoryId: categoryId,
+          ),
+        );
+      },
+    );
+  }
 
-        state.copyWith(isLoading: false, products: date, errorMessage: null),
-      );
+  Future<void> fetchAllProducts() async {
+    emit(state.copyWith(isLoading: true, errorMessage: null, categoryId: null));
+
+    final result = await _productRepo.getAllProducts();
+
+    result.fold(
+      (e) => emit(
+        state.copyWith(
+          errorMessage: e.toString(),
+          isLoading: false,
+        ),
+      ),
+      (data) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            products: data,
+            errorMessage: null,
+            categoryId: 0,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> saveProduct(int productId) async {
+    final result = await _productRepo.saveProduct(productId);
+
+    result.fold(
+      (e) => emit(state.copyWith(errorMessage: e.toString())),
+      (_) {
+        final updatedProducts = state.products.map((p) {
+          if (p.id == productId) {
+            return p.copyWith(isLiked: true);
+          }
+          return p;
+        }).toList();
+
+        emit(state.copyWith(products: updatedProducts, errorMessage: null));
+      },
+    );
+  }
+
+  Future<void> unSaveProduct(int productId) async {
+    final result = await _productRepo.unSaveProduct(productId);
+
+    result.fold(
+      (e) => emit(state.copyWith(errorMessage: e.toString())),
+      (_) {
+        final updatedProducts = state.products.map((p) {
+          if (p.id == productId) {
+            return p.copyWith(isLiked: false);
+          }
+          return p;
+        }).toList();
+
+        emit(state.copyWith(products: updatedProducts, errorMessage: null));
       },
     );
   }

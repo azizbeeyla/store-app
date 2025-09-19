@@ -9,6 +9,7 @@ import 'package:store_app/features/authentication/pages/sign_up_page.dart';
 import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/onboarding/pages/on_boarding_page.dart';
 import 'package:store_app/features/onboarding/pages/splash_page.dart';
+import 'package:store_app/features/saved/pages/saved_page.dart';
 
 import '../../features/authentication/pages/login_page.dart';
 
@@ -55,6 +56,8 @@ final router = GoRouter(
           path: Routes.homePage,
           builder: (context, state) => HomePage(),
         ),
+        
+        GoRoute(path: Routes.savedPage,builder: (context, state) => SavedPage(),)
       ],
     ),
   ],

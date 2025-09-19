@@ -23,9 +23,29 @@ class ProductModel {
       categoryId: json['categoryId'],
       image: json['image'],
       title: json['title'],
-      price: (json['price']??0 ),
+      price: (json['price'] ?? 0),
       isLiked: json['isLiked'] ?? false,
-      discount: (json['discount']??0 ),
+      discount: (json['discount'] ?? 0),
+    );
+  }
+
+  ProductModel copyWith({
+    int? id,
+    int? categoryId,
+    String? image,
+    String? title,
+    num? price,
+    bool? isLiked,
+    num? discount,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      categoryId: categoryId ?? this.categoryId,
+      image: image ?? this.image,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      isLiked: isLiked ?? this.isLiked,
+      discount: discount ?? this.discount,
     );
   }
 }
