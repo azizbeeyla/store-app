@@ -7,6 +7,7 @@ import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart
 import 'package:store_app/features/saved/managers/saved_cubit.dart';
 import 'package:store_app/features/saved/managers/saved_state.dart';
 import 'package:store_app/features/home/widgets/product_item.dart';
+import 'package:store_app/features/saved/widgets/no_saved_widgets.dart';
 import '../../../data/model/product_model.dart';
 
 class SavedPage extends StatelessWidget {
@@ -33,7 +34,7 @@ class SavedPage extends StatelessWidget {
             }
 
             if (state.savedProduct.isEmpty) {
-              return const Center(child: Text("Hozircha saqlangan mahsulot yo‘q"));
+              return const Center(child: NoSavedWidgets());
             }
 
             return GridView.builder(

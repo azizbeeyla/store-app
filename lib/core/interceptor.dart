@@ -9,7 +9,7 @@ class AuthInterceptor extends Interceptor {
 
   final dio = Dio(
     BaseOptions(
-      baseUrl: "http://192.168.10.72:8888/api/v1",
+      baseUrl: "http://192.168.9.108:8888/api/v1",
       validateStatus: (status) => true,
     ),
   );
@@ -84,7 +84,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    print("Error chiqdi: ${err.message}");
+
     handler.next(err);
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/app_color.dart';
 import 'package:store_app/data/repository/category_repository.dart';
 import 'package:store_app/data/repository/product_repository.dart';
@@ -54,7 +56,11 @@ class _HomePageState extends State<HomePage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 24.0),
-              child: SvgPicture.asset('assets/Bell.svg'),
+              child: GestureDetector(
+                  onTap: (){
+                    context.push(Routes.notification);
+                  },
+                  child: SvgPicture.asset('assets/Bell.svg')),
             ),
           ],
         ),

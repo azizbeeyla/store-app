@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/data/repository/category_repository.dart';
+import 'package:store_app/data/repository/notification_repository.dart';
 import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
 
@@ -56,6 +57,10 @@ class StoreApp extends StatelessWidget {
             Provider(
               create: (context) =>
                   CategoryRepository(apiClient: context.read()),
+            ),
+            Provider(
+              create: (context) =>
+                  NotificationRepository(apiClient: context.read()),
             ),
           ],
           child: MaterialApp.router(

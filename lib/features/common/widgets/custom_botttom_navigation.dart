@@ -38,7 +38,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       currentIndex: _currentIndex,
       onTap: (index) {
         setState(() => _currentIndex = index);
-        context.go(_routes[index]);
+        context.push(_routes[index]);
       },
       type: BottomNavigationBarType.fixed,
       backgroundColor: AppColors.white,

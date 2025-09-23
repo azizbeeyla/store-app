@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/routes.dart';
 
 import '../../../core/utils/app_color.dart';
 
@@ -17,8 +20,13 @@ class CustomAppBarMain extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.white,
       leadingWidth: 65,
       leading: Center(
-        child: SvgPicture.asset(
-          "assets/back_arrow.svg",
+        child: GestureDetector(
+          onTap: (){
+            context.pop();
+          },
+          child: SvgPicture.asset(
+            "assets/back_arrow.svg",
+          ),
         ),
       ),
       centerTitle: true,
@@ -27,14 +35,19 @@ class CustomAppBarMain extends StatelessWidget implements PreferredSizeWidget {
         style: TextStyle(
           color: AppColors.primary,
           fontWeight: FontWeight.w600,
-          fontSize: 24,
+          fontSize: 24.sp,
           fontFamily: "GeneralSans",
         ),
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 25),
-          child: SvgPicture.asset("assets/Bell.svg"),
+          padding: const EdgeInsets.only(right: 24),
+          child: GestureDetector(
+              onTap: (){
+
+                context.go(Routes.notification);
+              },
+              child: SvgPicture.asset("assets/Bell.svg")),
         ),
       ],
     );
