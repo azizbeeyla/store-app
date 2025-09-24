@@ -4,8 +4,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/data/repository/category_repository.dart';
 import 'package:store_app/data/repository/notification_repository.dart';
+import 'package:store_app/data/repository/product_detail_repository.dart';
 import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
+import 'package:store_app/data/repository/review_repository.dart';
 
 import 'core/client/dio_client.dart';
 import 'core/interceptor.dart';
@@ -62,6 +64,9 @@ class StoreApp extends StatelessWidget {
               create: (context) =>
                   NotificationRepository(apiClient: context.read()),
             ),
+            Provider(create: (context) => ReviewRepository(apiClient: context.read()),),
+            
+            Provider(create: (context) => DetailRepository(apiClient: context.read()),)
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,

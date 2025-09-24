@@ -13,6 +13,7 @@ import 'package:store_app/features/onboarding/pages/splash_page.dart';
 import 'package:store_app/features/saved/pages/saved_page.dart';
 
 import '../../features/authentication/pages/login_page.dart';
+import '../../features/product_detal/pages/product_detail_page.dart';
 
 final router = GoRouter(
   initialLocation: Routes.splash,
@@ -41,6 +42,14 @@ final router = GoRouter(
       ),
 
       routes: [
+        GoRoute(
+          path: '${Routes.detail}/:id',
+          builder: (context, state) {
+            final productId = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+            return ProductDetailPage(productId: productId);
+          },
+        ),
+
         GoRoute(
           path: Routes.forgotPassword,
           builder: (context, state) => ForgotPasswordPage(),

@@ -12,5 +12,6 @@ class Routes{
   static const  searchPage='/searchPage';
   static const  cardPage='/cardPage';
   static const  notification='/notification';
+  static const  detail='/detail';
 
 }
