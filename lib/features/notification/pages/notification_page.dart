@@ -5,7 +5,7 @@ import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart';
 import 'package:store_app/features/notification/managers/notification_cubit.dart';
 import 'package:store_app/features/notification/managers/notification_state.dart';
-import 'package:store_app/features/notification/widgets/notification_empty_widget.dart';
+import 'package:store_app/features/common/widgets/empty_widget.dart';
 import 'package:store_app/features/notification/widgets/notification_item.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -30,9 +30,12 @@ class NotificationPage extends StatelessWidget {
             }
 
             if (state.notifications == null || state.notifications!.isEmpty) {
-              return const NotificationEmptyWidget();
+              return EmptyStateWidget(
+                assetPath: 'assets/Bell-duotone.svg',
+                title: 'You haven’t gotten\n any notifications yet!',
+                subtitle: 'We’ll alert you when something\n cool happens',
+              );
             }
-
 
             return ListView.builder(
               padding: EdgeInsets.zero,

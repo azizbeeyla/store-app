@@ -15,6 +15,7 @@ abstract class DetailState with _$DetailState {
     required DetailModel detail,
     required List<ReviewModel> reviews,
     ProductSize? selectedSize,
+    bool? cartSuccess,
   }) = _DetailState;
 
   factory DetailState.initial() => DetailState(
@@ -35,5 +36,7 @@ abstract class DetailState with _$DetailState {
     ),
     reviews: [],
     selectedSize: null,
+    cartSuccess: null,
   );
+
 }

@@ -1,18 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/data/model/product_detail_model.dart';
 import 'package:store_app/data/repository/product_detail_repository.dart';
 import 'package:store_app/data/repository/review_repository.dart';
+import 'package:store_app/data/repository/cart_repository.dart';
+
 import 'detail_state.dart';
 
 class DetailCubit extends Cubit<DetailState> {
   final DetailRepository _productRepo;
   final ReviewRepository _reviewRepository;
+  final CartRepository _cartRepository;
 
   DetailCubit({
     required DetailRepository productRepo,
     required ReviewRepository reviewRepository,
-  }) : _productRepo = productRepo,
-       _reviewRepository = reviewRepository,
-       super(DetailState.initial());
+    required CartRepository cartRepository,
+  })  : _productRepo = productRepo,
+        _reviewRepository = reviewRepository,
+        _cartRepository = cartRepository,
+        super(DetailState.initial());
 
   Future<void> fetchProductDetail(int productId) async {
     emit(state.copyWith(loading: true, errorMessage: null));
@@ -20,13 +26,13 @@ class DetailCubit extends Cubit<DetailState> {
     final result = await _productRepo.getDetail(productId);
 
     result.fold(
-      (err) => emit(
+          (err) => emit(
         state.copyWith(
           loading: false,
           errorMessage: err.toString(),
         ),
       ),
-      (product) => emit(
+          (product) => emit(
         state.copyWith(
           loading: false,
           detail: product,
@@ -42,13 +48,13 @@ class DetailCubit extends Cubit<DetailState> {
     final result = await _reviewRepository.getReviews(id: productId);
 
     result.fold(
-      (err) => emit(
+          (err) => emit(
         state.copyWith(
           revLoading: false,
           errorReviews: err.toString(),
         ),
       ),
-      (reviews) => emit(
+          (reviews) => emit(
         state.copyWith(
           revLoading: false,
           reviews: reviews,
@@ -57,4 +63,33 @@ class DetailCubit extends Cubit<DetailState> {
       ),
     );
   }
+
+  void selectSize(ProductSize size) {
+    emit(state.copyWith(selectedSize: size));
+  }
+
+  Future<void> addToCart() async {
+    final selectedSize = state.selectedSize;
+    if (selectedSize == null) {
+      emit(state.copyWith(errorMessage: "Iltimos, razmer tanlang"));
+      return;
+    }
+
+    final result = await _cartRepository.addToCart(
+      productId: state.detail.id,
+      sizeId: selectedSize.id,
+    );
+
+    result.fold(
+          (error) => emit(state.copyWith(
+        errorMessage: error.toString(),
+        cartSuccess: false,
+      )),
+          (ok) => emit(state.copyWith(
+        cartSuccess: true,
+        errorMessage: null,
+      )),
+    );
+  }
+
 }

@@ -7,6 +7,7 @@ import 'package:store_app/features/authentication/pages/reset_code_page.dart';
 import 'package:store_app/features/authentication/pages/reset_password_page.dart';
 import 'package:store_app/features/authentication/pages/sign_up_page.dart';
 import 'package:store_app/features/home/pages/home_page.dart';
+import 'package:store_app/features/home/pages/search_page.dart';
 import 'package:store_app/features/notification/pages/notification_page.dart';
 import 'package:store_app/features/onboarding/pages/on_boarding_page.dart';
 import 'package:store_app/features/onboarding/pages/splash_page.dart';
@@ -70,6 +71,7 @@ final router = GoRouter(
         GoRoute(path: Routes.savedPage,builder: (context, state) => SavedPage(),)
       ],
     ),
-    GoRoute(path: Routes.notification,builder: (context, state) => NotificationPage(),)
+    GoRoute(path: Routes.notification,builder: (context, state) => NotificationPage(),),
+    GoRoute(path: Routes.searchPage,builder: (context, state) => SearchPage(),)
   ],
 );
