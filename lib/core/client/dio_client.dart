@@ -4,18 +4,16 @@ import 'package:store_app/core/client/result.dart';
 import '../interceptor.dart';
 
 class ApiClient {
-
   ApiClient({required this.interceptor}) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: "http://192.168.9.108:8888/api/v1",
+        baseUrl: "http://192.168.11.211:8888/api/v1",
         validateStatus: (status) => true,
       ),
     )..interceptors.add(interceptor);
   }
 
   final AuthInterceptor interceptor;
-
   late final Dio _dio;
 
   Future<Result<T>> get<T>(
@@ -42,6 +40,26 @@ class ApiClient {
       }) async {
     try {
       var response = await _dio.post(
+        path,
+        data: data,
+      );
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Result.ok(response.data);
+      } else {
+        return Result.error(Exception(response.data));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result> delete(
+      String path, {
+        Map<String, dynamic>? data,
+      }) async {
+    try {
+      var response = await _dio.delete(
         path,
         data: data,
       );

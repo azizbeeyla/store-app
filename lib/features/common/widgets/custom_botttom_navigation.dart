@@ -22,7 +22,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     Routes.homePage,
     Routes.searchPage,
     Routes.savedPage,
-    Routes.cardPage,
+    Routes.myCartPage,
     Routes.accountPage,
   ];
 

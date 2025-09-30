@@ -27,7 +27,7 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 24.0),
+      padding: const EdgeInsets.only(left: 24.0,right: 24),
       child: SizedBox(
         width: 341.w,
         height: 54.h,

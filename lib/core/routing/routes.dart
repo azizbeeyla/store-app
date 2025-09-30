@@ -10,8 +10,9 @@ class Routes{
   static const  savedPage='/savedPage';
   static const  accountPage='/accountPage';
   static const  searchPage='/searchPage';
-  static const  cardPage='/cardPage';
+  static const  myCartPage='/myCartPage';
   static const  notification='/notification';
   static const  detail='/detail';
+  static const  searchToDetail='searchPage/detail';
 
 }

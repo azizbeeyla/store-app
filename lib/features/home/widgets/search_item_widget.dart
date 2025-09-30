@@ -1,11 +1,9 @@
-// search_item_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/utils/app_color.dart';
 import '../../../data/model/product_model.dart';
-import 'package:go_router/go_router.dart';
-import '../../../core/routing/routes.dart';
+
 
 class SearchItemWidget extends StatelessWidget {
   final ProductModel product;

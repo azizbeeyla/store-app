@@ -8,6 +8,7 @@ import 'package:store_app/features/authentication/pages/reset_password_page.dart
 import 'package:store_app/features/authentication/pages/sign_up_page.dart';
 import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/home/pages/search_page.dart';
+import 'package:store_app/features/mycart/pages/my_cart_page.dart';
 import 'package:store_app/features/notification/pages/notification_page.dart';
 import 'package:store_app/features/onboarding/pages/on_boarding_page.dart';
 import 'package:store_app/features/onboarding/pages/splash_page.dart';
@@ -46,7 +47,8 @@ final router = GoRouter(
         GoRoute(
           path: '${Routes.detail}/:id',
           builder: (context, state) {
-            final productId = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+            final productId = int.parse(state.pathParameters['id']!);
+
             return ProductDetailPage(productId: productId);
           },
         ),
@@ -67,11 +69,33 @@ final router = GoRouter(
           path: Routes.homePage,
           builder: (context, state) => HomePage(),
         ),
-        
-        GoRoute(path: Routes.savedPage,builder: (context, state) => SavedPage(),)
+
+        GoRoute(
+          path: Routes.savedPage,
+          builder: (context, state) => SavedPage(),
+        ),
       ],
     ),
-    GoRoute(path: Routes.notification,builder: (context, state) => NotificationPage(),),
-    GoRoute(path: Routes.searchPage,builder: (context, state) => SearchPage(),)
+    GoRoute(
+      path: Routes.notification,
+      builder: (context, state) => NotificationPage(),
+    ),
+    GoRoute(
+      path: Routes.searchPage,
+      name: Routes.searchPage,
+      builder: (context, state) => SearchPage(),
+      routes: [
+        GoRoute(
+          name: Routes.searchToDetail,
+          path: Routes.searchToDetail,
+          builder: (context, state) {
+            final productId = int.parse(state.extra as String);
+
+            return ProductDetailPage(productId: productId);
+          },
+        ),
+      ],
+    ),
+    GoRoute(path: Routes.myCartPage,builder: (context, state) => MyCartPage(),)
   ],
 );

@@ -13,6 +13,7 @@ import '../widgets/detail_size_widget.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final int productId;
+
   const ProductDetailPage({required this.productId, super.key});
 
   @override
@@ -24,7 +25,9 @@ class ProductDetailPage extends StatelessWidget {
         productRepo: context.read(),
       )..fetchProductDetail(productId),
       child: BlocListener<DetailCubit, DetailState>(
-        listenWhen: (prev, curr) => prev.cartSuccess != curr.cartSuccess,
+        listenWhen: (prev, curr) =>
+        prev.cartSuccess != curr.cartSuccess ||
+            prev.errorMessage != curr.errorMessage,
         listener: (context, state) {
           if (state.cartSuccess == true) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -33,10 +36,14 @@ class ProductDetailPage extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
-          } else if (state.cartSuccess == false) {
+          }
+
+          if (state.cartSuccess == false &&
+              state.errorMessage != null &&
+              state.errorMessage!.isNotEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? "Xatolik yuz berdi"),
+                content: Text(state.errorMessage!),
                 backgroundColor: Colors.red,
               ),
             );
@@ -50,7 +57,7 @@ class ProductDetailPage extends StatelessWidget {
               );
             }
 
-            if (state.errorMessage !=  null && state.errorMessage!.isNotEmpty) {
+            if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
               return Scaffold(
                 appBar: CustomAppBarMain(title: "Details"),
                 body: Center(
@@ -81,7 +88,6 @@ class ProductDetailPage extends StatelessWidget {
                         SizedBox(height: 12.h),
                         DetailInfoWidget(detail: detail),
                         SizedBox(height: 16.h),
-
                         DetailSizesWidget(
                           sizes: detail.productSizes,
                           selectedSize: state.selectedSize,
@@ -93,11 +99,12 @@ class ProductDetailPage extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   DetailBottomBar(
                     price: detail.price,
                     isEnabled: state.selectedSize != null,
-                    onAddToCart: () {
+                    onAddToCart: state.selectedSize == null
+                        ? null
+                        : () {
                       context.read<DetailCubit>().addToCart();
                     },
                   ),

@@ -14,7 +14,6 @@ import 'package:store_app/features/home/managers/product_event.dart';
 import 'package:store_app/features/home/managers/product_state.dart';
 import 'package:store_app/features/home/widgets/row_textform_widget.dart';
 import 'package:store_app/features/home/widgets/search_item_widget.dart';
-
 import '../widgets/recent_searches_widget.dart';
 
 class SearchPage extends StatefulWidget {
@@ -132,7 +131,6 @@ class _SearchPageState extends State<SearchPage> {
                     }
 
                     return GridView.builder(
-
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 20,
                         childAspectRatio: 4,
@@ -144,11 +142,12 @@ class _SearchPageState extends State<SearchPage> {
                         final product = state.products[index];
 
                         return SearchItemWidget(
-                          onTap: (){
-                            context.push('${Routes.detail}/${product.id}');
-
+                          onTap: () {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              context.pushNamed(Routes.searchToDetail,extra: product.id.toString());
+                            });
                           },
-                          key: ValueKey('search_${product.id}'),
+
 
                           product: product,
                         );

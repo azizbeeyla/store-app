@@ -21,6 +21,8 @@ import 'core/interceptor.dart';
 import 'core/routing/router.dart';
 import 'data/repository/auth_repository.dart';
 import 'features/home/managers/category_cubit.dart';
+import 'features/mycart/managers/my_cart_bloc.dart';
+import 'features/mycart/managers/my_cart_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,18 +52,20 @@ class StoreApp extends StatelessWidget {
               create: (_) => const FlutterSecureStorage(),
             ),
             Provider<AuthInterceptor>(
-              create: (context) => AuthInterceptor(
-                secureStorage: context.read<FlutterSecureStorage>(),
-              ),
+              create: (context) =>
+                  AuthInterceptor(
+                    secureStorage: context.read<FlutterSecureStorage>(),
+                  ),
             ),
             Provider<ApiClient>(
               create: (context) =>
                   ApiClient(interceptor: context.read<AuthInterceptor>()),
             ),
             Provider<AuthRepository>(
-              create: (context) => AuthRepository(
-                apiClient: context.read<ApiClient>(),
-              ),
+              create: (context) =>
+                  AuthRepository(
+                    apiClient: context.read<ApiClient>(),
+                  ),
             ),
             Provider(
               create: (context) => ResetRepository(apiClient: context.read()),
@@ -90,22 +94,31 @@ class StoreApp extends StatelessWidget {
           child: Builder(
             builder: (context) {
               return MultiBlocProvider(
-                providers: [
+                  providers: [
                   BlocProvider(
-                    create: (_) => ProductBloc(
-                      productRepo: context.read<ProductRepository>(),
-                    )..add(FetchAllProducts()),
-                  ),
-                  BlocProvider(
-                    create: (_) => CategoryCubit(
-                      categoryRepo: context.read<CategoryRepository>(),
-                    )..fetchCategories(),
-                  ),
-                ],
-                child: MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  routerConfig: router,
-                ),
+                  create: (_)
+              =>
+              ProductBloc(
+                productRepo: context.read<ProductRepository>(),
+              )
+                ..add(FetchAllProducts())
+              ,
+              ),
+              BlocProvider(
+              create: (_) => CategoryCubit(
+              categoryRepo: context.read<CategoryRepository>(),
+              )..fetchCategories(),
+              ),
+              BlocProvider(
+              create: (context) => CartBloc(repository: context.read())..add(LoadCart())),
+              ],
+              child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig:
+              router
+              ,
+              )
+              ,
               );
             },
           ),
