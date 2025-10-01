@@ -31,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) return;
 
     if (token != null && token.isNotEmpty) {
-      context.go(Routes.homePage);
+      context.go(Routes.paymentCard);
     } else {
       context.go(Routes.onboarding);
     }

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:store_app/data/repository/card_repository.dart';
 import 'package:store_app/data/repository/cart_repository.dart';
 import 'package:store_app/data/repository/category_repository.dart';
 import 'package:store_app/data/repository/notification_repository.dart';
@@ -20,6 +21,7 @@ import 'core/client/dio_client.dart';
 import 'core/interceptor.dart';
 import 'core/routing/router.dart';
 import 'data/repository/auth_repository.dart';
+import 'features/card/managers/card_bloc.dart';
 import 'features/home/managers/category_cubit.dart';
 import 'features/mycart/managers/my_cart_bloc.dart';
 import 'features/mycart/managers/my_cart_event.dart';
@@ -90,6 +92,7 @@ class StoreApp extends StatelessWidget {
             Provider(
               create: (context) => CartRepository(apiClient: context.read()),
             ),
+            Provider(create: (context) => CardRepository(apiClient: context.read()),)
           ],
           child: Builder(
             builder: (context) {
@@ -111,6 +114,9 @@ class StoreApp extends StatelessWidget {
               ),
               BlocProvider(
               create: (context) => CartBloc(repository: context.read())..add(LoadCart())),
+                    BlocProvider(
+                      create: (_) => CardBloc(repo: context.read()),
+                    ),
               ],
               child: MaterialApp.router(
               debugShowCheckedModeBanner: false,

@@ -1,0 +1,109 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/features/account/widgets/custom_row_account.dart';
+import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
+import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart';
+
+import '../../../core/utils/app_color.dart';
+import '../widgets/logout_dialog.dart';
+
+class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: CustomAppBarMain(title: "Account"),
+      body: Column(
+        children: [
+
+          CustomRowAccount(
+            svgICon: 'assets/Box.svg',
+            title: 'My Orders',
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Container(
+            width: 390.w,
+            height: 8.h,
+            decoration: BoxDecoration(color: AppColors.grey),
+          ),
+
+          CustomRowAccount(svgICon: 'assets/Details.svg', title: "My Details",showDivider: false,),
+          CustomRowAccount(
+            svgICon: 'assets/Address.svg',
+            title: "Address Book",
+          ),
+          CustomRowAccount(
+            svgICon: 'assets/Card-duotone.svg',
+            title: "Payment Methods",
+          ),
+          GestureDetector(
+            onTap: () {
+              context.push("/notification-account");
+            },
+            child: CustomRowAccount(
+              svgICon: 'assets/Bell.svg',
+              title: "Notifications",
+            ),
+          ),
+          SizedBox(
+            height: 25.h,
+          ),
+      Container(
+        width: 390.w,
+        height: 8.h,
+        decoration: BoxDecoration(color: AppColors.grey),
+      ),
+          CustomRowAccount(svgICon: "assets/Question.svg", title: "FAQs",showDivider: false,),
+          CustomRowAccount(
+            svgICon: "assets/Headphones.svg",
+            title: "Help Center",
+          ),
+          SizedBox(
+            height: 25.h,
+          ),
+          Container(
+            width: 390.w,
+            height: 8.h,
+            decoration: BoxDecoration(color: AppColors.grey),
+          ),          Padding(
+            padding: const EdgeInsets.only(top: 25, left: 24, right: 275),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => LogoutDialog(),
+                );
+              },
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    "assets/Logout.svg",
+                  ),
+                  SizedBox(
+                    width: 19.w,
+                  ),
+                  Text(
+                    "Logout",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "GeneralSans",
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(isActive: 4),
+    );
+  }
+}

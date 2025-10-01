@@ -1,11 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/core/routing/routes.dart';
+import 'package:store_app/features/account/pages/account_page.dart';
 import 'package:store_app/features/authentication/managers/auth_view_model.dart';
 import 'package:store_app/features/authentication/pages/forgot_password_page.dart';
 import 'package:store_app/features/authentication/pages/reset_code_page.dart';
 import 'package:store_app/features/authentication/pages/reset_password_page.dart';
 import 'package:store_app/features/authentication/pages/sign_up_page.dart';
+import 'package:store_app/features/card/pages/new_card_page.dart';
+import 'package:store_app/features/card/pages/payment_card_page.dart';
 import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/home/pages/search_page.dart';
 import 'package:store_app/features/mycart/pages/my_cart_page.dart';
@@ -96,6 +99,9 @@ final router = GoRouter(
         ),
       ],
     ),
-    GoRoute(path: Routes.myCartPage,builder: (context, state) => MyCartPage(),)
+    GoRoute(path: Routes.myCartPage,builder: (context, state) => MyCartPage(),),
+    GoRoute(path: Routes.paymentCard,builder: (context, state) => PaymentCardPage(),),
+    GoRoute(path: Routes.addCard,builder: (context, state) => NewCardPage(),),
+    GoRoute(path: Routes.accountPage,builder: (context, state) => AccountPage(),)
   ],
 );
