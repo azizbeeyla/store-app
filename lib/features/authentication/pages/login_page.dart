@@ -16,7 +16,7 @@ import '../widgets/or_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
- 
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -103,33 +103,38 @@ class _LoginPageState extends State<LoginPage> {
 
                   Consumer<LoginViewModel>(
                     builder: (context, vm, child) {
-                      return CustomTextButton(
-                        title: vm.isLoading ? "Loading..." : "Login",
-                        backgroundColor: isFormValid
-                            ? AppColors.primary
-                            : AppColors.grey,
-                        titleColor: AppColors.white,
-                        borderColor: isFormValid ? null : AppColors.textColor,
-                        onPressed: isFormValid && !vm.isLoading
-                            ? () async {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  final model = LoginModel(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  );
-                                  await vm.login(model);
-
-                                  if (vm.success) {
-                                    context.go(Routes.homePage);
-                                  } else if (vm.error != null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(vm.error!)),
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 24.0, right: 24),
+                        child: CustomTextButton(
+                          title: vm.isLoading ? "Loading..." : "Login",
+                          backgroundColor: isFormValid
+                              ? AppColors.primary
+                              : AppColors.grey,
+                          titleColor: AppColors.white,
+                          borderColor: isFormValid ? null : AppColors.textColor,
+                          onPressed: isFormValid && !vm.isLoading
+                              ? () async {
+                                  if (_formKey.currentState?.validate() ??
+                                      false) {
+                                    final model = LoginModel(
+                                      email: emailController.text,
+                                      password: passwordController.text,
                                     );
+                                    await vm.login(model);
+
+                                    if (vm.success) {
+                                      context.go(Routes.homePage);
+                                    } else if (vm.error != null) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(content: Text(vm.error!)),
+                                      );
+                                    }
                                   }
                                 }
-                              }
-                            : null,
+                              : null,
+                        ),
                       );
                     },
                   ),
@@ -137,24 +142,33 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 24.h),
                   OrWidget(),
                   SizedBox(height: 24.h),
-                  CustomTextButton(
-                    title: "Login with Google",
-                    backgroundColor: AppColors.white,
-                    titleColor: AppColors.primary,
-                    borderColor: AppColors.grey,
-                    leftIcon: 'assets/logos_google-icon.svg',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: CustomTextButton(
+                      title: "Login with Google",
+                      backgroundColor: AppColors.white,
+                      titleColor: AppColors.primary,
+                      borderColor: AppColors.grey,
+                      leftIcon: 'assets/logos_google-icon.svg',
+                    ),
                   ),
                   SizedBox(height: 16.h),
-                  CustomTextButton(
-                    title: "Login with Facebook",
-                    backgroundColor: AppColors.blue,
-                    titleColor: AppColors.white,
-                    leftIcon: 'assets/logos_facebook.svg',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: CustomTextButton(
+                      title: "Login with Facebook",
+                      backgroundColor: AppColors.blue,
+                      titleColor: AppColors.white,
+                      leftIcon: 'assets/logos_facebook.svg',
+                    ),
                   ),
 
                   SizedBox(height: 164.h),
                   Center(
                     child: AlreadyAccountText(
+                      onActionTap: () {
+                        context.go(Routes.signup);
+                      },
                       prefixText: "Don’t have an account? ",
                       actionText: "Join",
                     ),

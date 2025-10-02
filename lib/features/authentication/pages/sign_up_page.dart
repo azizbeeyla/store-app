@@ -103,32 +103,35 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   Consumer<RegisterViewModel>(
                     builder: (context, vm, child) {
-                      return CustomTextButton(
-                        title: vm.isLoading ? "Loading..." : "Create an Account",
-                        backgroundColor:
-                        isFormValid ? AppColors.primary : AppColors.grey,
-                        titleColor: AppColors.white,
-                        borderColor: isFormValid ? null : AppColors.textColor,
-                        onPressed: isFormValid && !vm.isLoading
-                            ? () async {
-                          if (_formKey.currentState!.validate()) {
-                            final model = AuthModel(
-                              fullName: nameController.text,
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-                            await vm.register(model);
-
-                            if (vm.success) {
-                              context.push(Routes.login);
-                            } else if (vm.error != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(vm.error!)),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: CustomTextButton(
+                          title: vm.isLoading ? "Loading..." : "Create an Account",
+                          backgroundColor:
+                          isFormValid ? AppColors.primary : AppColors.grey,
+                          titleColor: AppColors.white,
+                          borderColor: isFormValid ? null : AppColors.textColor,
+                          onPressed: isFormValid && !vm.isLoading
+                              ? () async {
+                            if (_formKey.currentState!.validate()) {
+                              final model = AuthModel(
+                                fullName: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
                               );
+                              await vm.register(model);
+
+                              if (vm.success) {
+                                context.push(Routes.login);
+                              } else if (vm.error != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(vm.error!)),
+                                );
+                              }
                             }
                           }
-                        }
-                            : null,
+                              : null,
+                        ),
                       );
                     },
                   ),
@@ -136,19 +139,26 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(height: 24.h),
                   OrWidget(),
                   SizedBox(height: 24.h,),
-                  CustomTextButton(
-                    title: "Sign Up with Google ",
-                    backgroundColor: AppColors.white,
-                    titleColor: AppColors.primary,
-                    borderColor: AppColors.grey,
-                    leftIcon: 'assets/logos_google-icon.svg',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: CustomTextButton(
+                      title: "Sign Up with Google ",
+                      backgroundColor: AppColors.white,
+                      titleColor: AppColors.primary,
+                      borderColor: AppColors.grey,
+                      leftIcon: 'assets/logos_google-icon.svg',
+                    ),
                   ),
                   SizedBox(height: 16.h),
-                  CustomTextButton(
-                    title: "Sign Up with Facebook ",
-                    backgroundColor: AppColors.blue,
-                    titleColor: AppColors.white,
-                    leftIcon: 'assets/logos_facebook.svg',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: CustomTextButton(
+
+                      title: "Sign Up with Facebook ",
+                      backgroundColor: AppColors.blue,
+                      titleColor: AppColors.white,
+                      leftIcon: 'assets/logos_facebook.svg',
+                    ),
                   ),
                   SizedBox(height: 48.h),
 

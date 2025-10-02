@@ -13,6 +13,7 @@ import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/home/pages/search_page.dart';
 import 'package:store_app/features/mycart/pages/my_cart_page.dart';
 import 'package:store_app/features/notification/pages/notification_page.dart';
+import 'package:store_app/features/notification/pages/notification_settings_page.dart';
 import 'package:store_app/features/onboarding/pages/on_boarding_page.dart';
 import 'package:store_app/features/onboarding/pages/splash_page.dart';
 import 'package:store_app/features/saved/pages/saved_page.dart';
@@ -102,6 +103,7 @@ final router = GoRouter(
     GoRoute(path: Routes.myCartPage,builder: (context, state) => MyCartPage(),),
     GoRoute(path: Routes.paymentCard,builder: (context, state) => PaymentCardPage(),),
     GoRoute(path: Routes.addCard,builder: (context, state) => NewCardPage(),),
-    GoRoute(path: Routes.accountPage,builder: (context, state) => AccountPage(),)
+    GoRoute(path: Routes.accountPage,builder: (context, state) => AccountPage(),),
+    GoRoute(path: Routes.notifSettings,builder: (context, state) => NotificationSettingsPage(),),
   ],
 );

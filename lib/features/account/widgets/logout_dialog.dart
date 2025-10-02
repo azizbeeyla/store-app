@@ -59,26 +59,33 @@ class LogoutDialog extends StatelessWidget {
             SizedBox(
               height: 24.h,
             ),
-            CustomTextButton(
-              title: "Yes, Logout",
-              backgroundColor: Color(0xFFED1010),
-              onPressed: () async {
-                await context.read<AuthInterceptor>().logout();
-                context.go(Routes.login);
-              },
+            Padding(
+              padding: const EdgeInsets.only(left: 24.0,right: 24),
+              child: CustomTextButton(
+                title: "Yes, Logout",
+                backgroundColor: Color(0xFFED1010),
+                onPressed: () async {
+                  await context.read<AuthInterceptor>().logout();
+                  context.go(Routes.login);
+                },
 
-              titleColor: AppColors.white,
+                titleColor: AppColors.white,
+              ),
             ),
             SizedBox(
               height: 12.h,
             ),
-            CustomTextButton(
-              title: "No, Cancel",
-              backgroundColor: AppColors.white,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              titleColor: AppColors.primary,
+            Padding(
+              padding: const EdgeInsets.only(left: 24.0, right: 24),
+              child: CustomTextButton(
+                borderColor: AppColors.grey,
+                title: "No, Cancel",
+                backgroundColor: AppColors.white,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                titleColor: AppColors.primary,
+              ),
             ),
           ],
         ),

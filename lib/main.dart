@@ -10,6 +10,7 @@ import 'package:store_app/data/repository/card_repository.dart';
 import 'package:store_app/data/repository/cart_repository.dart';
 import 'package:store_app/data/repository/category_repository.dart';
 import 'package:store_app/data/repository/notification_repository.dart';
+import 'package:store_app/data/repository/notification_settings_repository.dart';
 import 'package:store_app/data/repository/product_detail_repository.dart';
 import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
@@ -54,20 +55,18 @@ class StoreApp extends StatelessWidget {
               create: (_) => const FlutterSecureStorage(),
             ),
             Provider<AuthInterceptor>(
-              create: (context) =>
-                  AuthInterceptor(
-                    secureStorage: context.read<FlutterSecureStorage>(),
-                  ),
+              create: (context) => AuthInterceptor(
+                secureStorage: context.read<FlutterSecureStorage>(),
+              ),
             ),
             Provider<ApiClient>(
               create: (context) =>
                   ApiClient(interceptor: context.read<AuthInterceptor>()),
             ),
             Provider<AuthRepository>(
-              create: (context) =>
-                  AuthRepository(
-                    apiClient: context.read<ApiClient>(),
-                  ),
+              create: (context) => AuthRepository(
+                apiClient: context.read<ApiClient>(),
+              ),
             ),
             Provider(
               create: (context) => ResetRepository(apiClient: context.read()),
@@ -92,39 +91,39 @@ class StoreApp extends StatelessWidget {
             Provider(
               create: (context) => CartRepository(apiClient: context.read()),
             ),
-            Provider(create: (context) => CardRepository(apiClient: context.read()),)
+            Provider(
+              create: (context) => CardRepository(apiClient: context.read()),
+            ),
+            Provider(
+              create: (context) => NotificationSettingsRepository(),
+            ),
           ],
           child: Builder(
             builder: (context) {
               return MultiBlocProvider(
-                  providers: [
+                providers: [
                   BlocProvider(
-                  create: (_)
-              =>
-              ProductBloc(
-                productRepo: context.read<ProductRepository>(),
-              )
-                ..add(FetchAllProducts())
-              ,
-              ),
-              BlocProvider(
-              create: (_) => CategoryCubit(
-              categoryRepo: context.read<CategoryRepository>(),
-              )..fetchCategories(),
-              ),
-              BlocProvider(
-              create: (context) => CartBloc(repository: context.read())..add(LoadCart())),
-                    BlocProvider(
-                      create: (_) => CardBloc(repo: context.read()),
-                    ),
-              ],
-              child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              routerConfig:
-              router
-              ,
-              )
-              ,
+                    create: (_) => ProductBloc(
+                      productRepo: context.read<ProductRepository>(),
+                    )..add(FetchAllProducts()),
+                  ),
+                  BlocProvider(
+                    create: (_) => CategoryCubit(
+                      categoryRepo: context.read<CategoryRepository>(),
+                    )..fetchCategories(),
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        CartBloc(repository: context.read())..add(LoadCart()),
+                  ),
+                  BlocProvider(
+                    create: (_) => CardBloc(repo: context.read()),
+                  ),
+                ],
+                child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  routerConfig: router,
+                ),
               );
             },
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/features/account/widgets/custom_row_account.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart';
@@ -23,6 +24,7 @@ class AccountPage extends StatelessWidget {
           CustomRowAccount(
             svgICon: 'assets/Box.svg',
             title: 'My Orders',
+
           ),
           SizedBox(
             height: 25,
@@ -41,10 +43,14 @@ class AccountPage extends StatelessWidget {
           CustomRowAccount(
             svgICon: 'assets/Card-duotone.svg',
             title: "Payment Methods",
+            onPressed: (){
+
+              context.push(Routes.paymentCard);
+            },
           ),
           GestureDetector(
             onTap: () {
-              context.push("/notification-account");
+              context.push(Routes.notifSettings);
             },
             child: CustomRowAccount(
               svgICon: 'assets/Bell.svg',

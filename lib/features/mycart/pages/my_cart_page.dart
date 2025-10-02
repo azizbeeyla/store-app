@@ -69,11 +69,14 @@ class MyCartPage extends StatelessWidget {
                         child: TotalItem(item: state.cart!),
                       ),
                        SizedBox(height: 51),
-                      CustomTextButton(
-                        title: 'Go To Checkout',
-                        backgroundColor: AppColors.primary,
-                        titleColor: AppColors.white,
-                        rightIcon: 'assets/arrow-right.svg',
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: CustomTextButton(
+                          title: 'Go To Checkout',
+                          backgroundColor: AppColors.primary,
+                          titleColor: AppColors.white,
+                          rightIcon: 'assets/arrow-right.svg',
+                        ),
                       ),
                     ],
                   ),

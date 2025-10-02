@@ -8,12 +8,14 @@ class CustomRowAccount extends StatelessWidget {
   final String svgICon;
   final String title;
   final bool showDivider;
+  final VoidCallback? onPressed;
+
 
   const CustomRowAccount({
     super.key,
     required this.svgICon,
     required this.title,
-    this.showDivider = true,
+    this.showDivider = true, this.onPressed,
   });
 
   @override
@@ -25,22 +27,25 @@ class CustomRowAccount extends StatelessWidget {
           if (showDivider)
             const Divider(color: AppColors.primary100),
           SizedBox(height: 20.h,),
-          Row(
-            children: [
-              SvgPicture.asset(svgICon),
-              const SizedBox(width: 18),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontFamily: "GeneralSans",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
+          GestureDetector(
+            onTap: onPressed,
+            child: Row(
+              children: [
+                SvgPicture.asset(svgICon),
+                const SizedBox(width: 18),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontFamily: "GeneralSans",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              const Spacer(),
-              SvgPicture.asset("assets/right_arrow.svg"),
-            ],
+                const Spacer(),
+                SvgPicture.asset("assets/right_arrow.svg"),
+              ],
+            ),
           ),
         ],
       ),
