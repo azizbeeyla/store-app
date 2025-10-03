@@ -6,10 +6,8 @@ import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/features/account/widgets/custom_row_account.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart';
-
 import '../../../core/utils/app_color.dart';
 import '../widgets/logout_dialog.dart';
-
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
 
@@ -20,11 +18,9 @@ class AccountPage extends StatelessWidget {
       appBar: CustomAppBarMain(title: "Account"),
       body: Column(
         children: [
-
           CustomRowAccount(
             svgICon: 'assets/Box.svg',
             title: 'My Orders',
-
           ),
           SizedBox(
             height: 25,
@@ -35,7 +31,11 @@ class AccountPage extends StatelessWidget {
             decoration: BoxDecoration(color: AppColors.grey),
           ),
 
-          CustomRowAccount(svgICon: 'assets/Details.svg', title: "My Details",showDivider: false,),
+          CustomRowAccount(
+            svgICon: 'assets/Details.svg',
+            title: "My Details",
+            showDivider: false,
+          ),
           CustomRowAccount(
             svgICon: 'assets/Address.svg',
             title: "Address Book",
@@ -43,8 +43,7 @@ class AccountPage extends StatelessWidget {
           CustomRowAccount(
             svgICon: 'assets/Card-duotone.svg',
             title: "Payment Methods",
-            onPressed: (){
-
+            onPressed: () {
               context.push(Routes.paymentCard);
             },
           ),
@@ -60,13 +59,21 @@ class AccountPage extends StatelessWidget {
           SizedBox(
             height: 25.h,
           ),
-      Container(
-        width: 390.w,
-        height: 8.h,
-        decoration: BoxDecoration(color: AppColors.grey),
-      ),
-          CustomRowAccount(svgICon: "assets/Question.svg", title: "FAQs",showDivider: false,),
+          Container(
+            width: 390.w,
+            height: 8.h,
+            decoration: BoxDecoration(color: AppColors.grey),
+          ),
           CustomRowAccount(
+            svgICon: "assets/Question.svg",
+            title: "FAQs",
+            showDivider: false,
+          ),
+          CustomRowAccount(
+            onPressed: () {
+              context.push(Routes.helpCenter);
+            },
+
             svgICon: "assets/Headphones.svg",
             title: "Help Center",
           ),
@@ -77,7 +84,8 @@ class AccountPage extends StatelessWidget {
             width: 390.w,
             height: 8.h,
             decoration: BoxDecoration(color: AppColors.grey),
-          ),          Padding(
+          ),
+          Padding(
             padding: const EdgeInsets.only(top: 25, left: 24, right: 275),
             child: GestureDetector(
               onTap: () {

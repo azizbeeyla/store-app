@@ -9,13 +9,13 @@ class CardRepository {
   CardRepository({required ApiClient apiClient}) : _apiClient = apiClient;
 
   Future<Result<List<CardModel>>> getCards() async {
-    final response = await _apiClient.get<List>('/cards/list');
+    var response = await _apiClient.get<List>('/cards/list');
 
     return response.fold(
           (error) => Result.error(error),
           (data) {
         final cards = (data)
-            .map((x) => CardModel.fromJson(Map<String, dynamic>.from(x)))
+            .map((x) => CardModel.fromJson(x))
             .toList();
         return Result.ok(cards);
       },
@@ -23,7 +23,7 @@ class CardRepository {
   }
 
   Future<Result<void>> addCard(AddCardModel data) async {
-    final response = await _apiClient.post("/cards/create", data: data.toJson());
+    var response = await _apiClient.post("/cards/create", data: data.toJson());
 
     return response.fold(
           (error) => Result.error(error),

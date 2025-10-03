@@ -9,7 +9,6 @@ final class CardAddEvent extends CardEvent {
   CardAddEvent(this.data);
 }
 
-/// 🟢 karta tanlash (id bo‘yicha)
 final class SelectCardEvent extends CardEvent {
   final int selectedId;
   SelectCardEvent(this.selectedId);

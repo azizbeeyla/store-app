@@ -8,7 +8,6 @@ import 'package:store_app/core/utils/app_color.dart';
 import 'package:store_app/data/model/payment_model/add_cart_model.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_text_button.dart';
-
 import '../../../core/utils/card_validator.dart';
 import '../../../core/utils/input_formatter.dart';
 import '../../common/widgets/custom_dialog.dart';
@@ -25,7 +24,6 @@ class NewCardPage extends StatefulWidget {
 
 class _NewCardPageState extends State<NewCardPage> {
   final formKey = GlobalKey<FormState>();
-
   final numberController = TextEditingController();
   final dateController = TextEditingController();
   final codeController = TextEditingController();
@@ -49,7 +47,8 @@ class _NewCardPageState extends State<NewCardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: AppColors.white,      appBar: CustomAppBarMain(
+      backgroundColor: AppColors.white,
+      appBar: CustomAppBarMain(
         title: "New Card",
       ),
       body: Padding(
@@ -83,7 +82,6 @@ class _NewCardPageState extends State<NewCardPage> {
               ),
               SizedBox(height: 16.h),
 
-              /// Row: expiry + cvc
               Row(
                 children: [
                   Expanded(
@@ -137,8 +135,6 @@ class _NewCardPageState extends State<NewCardPage> {
                         },
                       ),
                     );
-
-                    // bloc event
                     context.read<CardBloc>().add(
                       CardAddEvent(
                         AddCardModel(

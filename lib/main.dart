@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:store_app/data/repository/address_repository.dart';
 import 'package:store_app/data/repository/card_repository.dart';
 import 'package:store_app/data/repository/cart_repository.dart';
 import 'package:store_app/data/repository/category_repository.dart';
@@ -15,6 +16,7 @@ import 'package:store_app/data/repository/product_detail_repository.dart';
 import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
 import 'package:store_app/data/repository/review_repository.dart';
+import 'package:store_app/features/address/managers/address_bloc.dart';
 import 'package:store_app/features/home/managers/product_bloc.dart';
 import 'package:store_app/features/home/managers/product_event.dart';
 import 'package:store_app/firebase_options.dart';
@@ -96,7 +98,9 @@ class StoreApp extends StatelessWidget {
             ),
             Provider(
               create: (context) => NotificationSettingsRepository(),
+              
             ),
+            Provider(create: (context) => AddressRepository(apiClient: context.read()),)
           ],
           child: Builder(
             builder: (context) {
@@ -118,6 +122,10 @@ class StoreApp extends StatelessWidget {
                   ),
                   BlocProvider(
                     create: (_) => CardBloc(repo: context.read()),
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        AddressBloc(addressRepo: context.read()),
                   ),
                 ],
                 child: MaterialApp.router(

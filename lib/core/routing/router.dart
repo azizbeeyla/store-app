@@ -2,6 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/features/account/pages/account_page.dart';
+import 'package:store_app/features/account/pages/help_center_page.dart';
+import 'package:store_app/features/address/pages/address_page.dart';
 import 'package:store_app/features/authentication/managers/auth_view_model.dart';
 import 'package:store_app/features/authentication/pages/forgot_password_page.dart';
 import 'package:store_app/features/authentication/pages/reset_code_page.dart';
@@ -105,5 +107,8 @@ final router = GoRouter(
     GoRoute(path: Routes.addCard,builder: (context, state) => NewCardPage(),),
     GoRoute(path: Routes.accountPage,builder: (context, state) => AccountPage(),),
     GoRoute(path: Routes.notifSettings,builder: (context, state) => NotificationSettingsPage(),),
+    GoRoute(path: Routes.address,builder: (context, state) => AddressPage(),),
+    GoRoute(path: Routes.helpCenter,builder: (context, state) => HelpCenterPage(),),
+
   ],
 );
