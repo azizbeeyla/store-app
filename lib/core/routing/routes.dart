@@ -19,5 +19,6 @@ class Routes{
   static const  notifSettings='/notifSettings';
   static const  address='/address';
   static const  helpCenter='/helpCenter';
+  static const  myDetail='/myDetail';
 
 }

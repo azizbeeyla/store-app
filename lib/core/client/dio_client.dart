@@ -54,6 +54,46 @@ class ApiClient {
     }
   }
 
+  Future<Result> patch(
+      String path, {
+        required Map<String, dynamic> data,
+      }) async {
+    try {
+      var response = await _dio.patch(
+        path,
+        data: data,
+      );
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Result.ok(response.data);
+      } else {
+        return Result.error(Exception(response.data));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result> put(
+      String path, {
+        required Map<String, dynamic> data,
+      }) async {
+    try {
+      var response = await _dio.put(
+        path,
+        data: data,
+      );
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Result.ok(response.data);
+      } else {
+        return Result.error(Exception(response.data));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
   Future<Result> delete(
       String path, {
         Map<String, dynamic>? data,

@@ -16,9 +16,11 @@ import 'package:store_app/data/repository/product_detail_repository.dart';
 import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
 import 'package:store_app/data/repository/review_repository.dart';
+import 'package:store_app/data/repository/user_repository.dart';
 import 'package:store_app/features/address/managers/address_bloc.dart';
 import 'package:store_app/features/home/managers/product_bloc.dart';
 import 'package:store_app/features/home/managers/product_event.dart';
+import 'package:store_app/features/my_detail/managers/user_bloc.dart';
 import 'package:store_app/firebase_options.dart';
 import 'core/client/dio_client.dart';
 import 'core/interceptor.dart';
@@ -100,7 +102,9 @@ class StoreApp extends StatelessWidget {
               create: (context) => NotificationSettingsRepository(),
               
             ),
-            Provider(create: (context) => AddressRepository(apiClient: context.read()),)
+            Provider(create: (context) => AddressRepository(apiClient: context.read()),),
+            Provider(create: (context) => UserRepository(apiClient: context.read()),),
+
           ],
           child: Builder(
             builder: (context) {
@@ -127,6 +131,7 @@ class StoreApp extends StatelessWidget {
                     create: (context) =>
                         AddressBloc(addressRepo: context.read()),
                   ),
+                  BlocProvider(create: (context) => UserBloc(userRepo: context.read()),)
                 ],
                 child: MaterialApp.router(
                   debugShowCheckedModeBanner: false,

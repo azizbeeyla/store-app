@@ -32,6 +32,9 @@ class AccountPage extends StatelessWidget {
           ),
 
           CustomRowAccount(
+            onPressed: (){
+              context.push(Routes.myDetail);
+            },
             svgICon: 'assets/Details.svg',
             title: "My Details",
             showDivider: false,
