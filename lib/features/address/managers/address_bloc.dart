@@ -11,7 +11,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         super(AddressState.initial()) {
     on<AddressListEvent>(_onLoadAddresses);
     on<SelectAddressEvent>(_onSelectAddress);
-
     add(AddressListEvent());
   }
 

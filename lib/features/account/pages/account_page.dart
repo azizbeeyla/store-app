@@ -40,6 +40,9 @@ class AccountPage extends StatelessWidget {
             showDivider: false,
           ),
           CustomRowAccount(
+            onPressed: (){
+              context.push(Routes.address);
+            },
             svgICon: 'assets/Address.svg',
             title: "Address Book",
           ),

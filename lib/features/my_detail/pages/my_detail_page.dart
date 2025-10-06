@@ -9,6 +9,7 @@ import '../managers/user_bloc.dart';
 import '../managers/user_event.dart';
 import '../managers/user_state.dart';
 import '../widgets/custom_text_form_widget.dart';
+
 class MyDetailPage extends StatefulWidget {
   const MyDetailPage({super.key});
   @override
@@ -98,7 +99,7 @@ class _MyDetailPageState extends State<MyDetailPage> {
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 24),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
               child: Column(
                 children: [
                   Divider(
@@ -157,8 +158,7 @@ class _MyDetailPageState extends State<MyDetailPage> {
                 ],
               ),
             ),
-          ),
-          bottomNavigationBar: CustomBottomNavigationBar(isActive: 4),
+          ),          bottomNavigationBar: CustomBottomNavigationBar(isActive: 4),
         );
       },
     );

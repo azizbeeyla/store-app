@@ -1,8 +1,6 @@
   import 'package:freezed_annotation/freezed_annotation.dart';
   import 'package:store_app/data/model/address_model.dart';
-
   part 'address_state.freezed.dart';
-
   @freezed
   abstract class AddressState with _$AddressState {
     const factory AddressState({
