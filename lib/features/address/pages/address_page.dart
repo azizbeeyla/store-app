@@ -8,8 +8,10 @@ import 'package:store_app/features/address/managers/address_bloc.dart';
 import 'package:store_app/features/address/managers/address_event.dart';
 import 'package:store_app/features/address/managers/address_state.dart';
 import 'custom_address_widget.dart';
+
 class AddressPage extends StatelessWidget {
   const AddressPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,11 +60,15 @@ class AddressPage extends StatelessWidget {
                     children: List.generate(addresses.length, (index) {
                       final address = addresses[index];
 
-
-                      return AddressWidget(address: address, selectedId: state.selectedAddressId, onSelected: (id){
-                        context.read<AddressBloc>().add(SelectAddressEvent(id));
-
-                      });
+                      return AddressWidget(
+                        address: address,
+                        selectedId: state.selectedAddressId,
+                        onSelected: (id) {
+                          context.read<AddressBloc>().add(
+                            SelectAddressEvent(id),
+                          );
+                        },
+                      );
                     }),
                   ),
 
@@ -73,7 +79,6 @@ class AddressPage extends StatelessWidget {
                     borderColor: AppColors.grey,
                     titleColor: AppColors.primary,
                     leftIcon: 'assets/Plus.svg',
-
                   ),
                 ],
               ),
@@ -93,11 +98,13 @@ class AddressPage extends StatelessWidget {
           backgroundColor: AppColors.primary,
           titleColor: AppColors.white,
           onPressed: () {
-            final selectedId = context.read<AddressBloc>().state.selectedAddressId;
+            final selectedId = context
+                .read<AddressBloc>()
+                .state
+                .selectedAddressId;
             if (selectedId != null) {
               debugPrint('Applying address id: $selectedId');
             }
-
           },
         ),
       ),

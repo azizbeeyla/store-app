@@ -119,7 +119,6 @@ class MyCartItemWidget extends StatelessWidget {
                       ),
                     ),
 
-                    // quantity text
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
                       child: Text(

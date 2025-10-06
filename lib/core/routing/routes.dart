@@ -20,5 +20,6 @@ class Routes{
   static const  address='/address';
   static const  helpCenter='/helpCenter';
   static const  myDetail='/myDetail';
+  static const  checkOut='/checkOut';
 
 }

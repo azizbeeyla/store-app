@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/app_color.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart';
@@ -73,6 +75,9 @@ class MyCartPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: CustomTextButton(
                           title: 'Go To Checkout',
+                          onPressed: (){
+                            context.push(Routes.checkOut);
+                          },
                           backgroundColor: AppColors.primary,
                           titleColor: AppColors.white,
                           rightIcon: 'assets/arrow-right.svg',

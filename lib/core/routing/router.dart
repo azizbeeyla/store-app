@@ -11,6 +11,7 @@ import 'package:store_app/features/authentication/pages/reset_password_page.dart
 import 'package:store_app/features/authentication/pages/sign_up_page.dart';
 import 'package:store_app/features/card/pages/new_card_page.dart';
 import 'package:store_app/features/card/pages/payment_card_page.dart';
+import 'package:store_app/features/checkout/pages/checkout_page.dart';
 import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/home/pages/search_page.dart';
 import 'package:store_app/features/my_detail/pages/my_detail_page.dart';
@@ -111,6 +112,7 @@ final router = GoRouter(
     GoRoute(path: Routes.address,builder: (context, state) => AddressPage(),),
     GoRoute(path: Routes.helpCenter,builder: (context, state) => HelpCenterPage(),),
     GoRoute(path: Routes.myDetail,builder: (context, state) => MyDetailPage(),),
+    GoRoute(path: Routes.checkOut,builder: (context, state) => CheckoutPage(),),
 
   ],
 );
