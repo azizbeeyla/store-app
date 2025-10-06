@@ -71,6 +71,9 @@ class AccountPage extends StatelessWidget {
             decoration: BoxDecoration(color: AppColors.grey),
           ),
           CustomRowAccount(
+            onPressed: (){
+              context.push(Routes.faqPage);
+            },
             svgICon: "assets/Question.svg",
             title: "FAQs",
             showDivider: false,

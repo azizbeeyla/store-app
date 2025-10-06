@@ -8,13 +8,14 @@ class RowTextFormWidget extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final bool showFilter;
+  final String hintText;
 
   const RowTextFormWidget({
     super.key,
     this.controller,
     this.onChanged,
     this.onSubmitted,
-    this.showFilter = true,
+    this.showFilter = true,  this.hintText="Search for clothes...",
   });
 
   @override
@@ -29,7 +30,7 @@ class RowTextFormWidget extends StatelessWidget {
               onChanged: onChanged,
               onFieldSubmitted: onSubmitted,
               decoration: InputDecoration(
-                hintText: "Search for clothes...",
+                hintText: hintText,
                 hintStyle: TextStyle(
                   color: AppColors.textColor,
                   fontWeight: FontWeight.w400,

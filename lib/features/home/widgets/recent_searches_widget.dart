@@ -6,7 +6,6 @@ import 'package:store_app/core/utils/app_color.dart';
 class RecentSearchesWidget extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
-
   const RecentSearchesWidget({
     super.key,
     required this.title,
@@ -37,7 +36,6 @@ class RecentSearchesWidget extends StatelessWidget {
           ],
         ),
         SizedBox(height: 12.h,),
-
         Divider(color: AppColors.grey,)
       ],
     );

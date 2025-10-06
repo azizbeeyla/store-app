@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/features/account/pages/account_page.dart';
+import 'package:store_app/features/account/pages/faqs_page.dart';
 import 'package:store_app/features/account/pages/help_center_page.dart';
 import 'package:store_app/features/address/pages/address_page.dart';
 import 'package:store_app/features/authentication/managers/auth_view_model.dart';
@@ -113,6 +114,7 @@ final router = GoRouter(
     GoRoute(path: Routes.helpCenter,builder: (context, state) => HelpCenterPage(),),
     GoRoute(path: Routes.myDetail,builder: (context, state) => MyDetailPage(),),
     GoRoute(path: Routes.checkOut,builder: (context, state) => CheckoutPage(),),
+    GoRoute(path: Routes.faqPage,builder: (context, state) => FaqPage(),),
 
   ],
 );

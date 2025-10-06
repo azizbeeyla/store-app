@@ -3,12 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
-
 import '../../../core/utils/app_color.dart';
 import '../../../data/model/payment_model/card_model.dart';
-
-
-
 class PaymentWidget extends StatelessWidget {
   const PaymentWidget({
     super.key,
