@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/app_color.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_text_button.dart';
 import 'package:store_app/features/address/managers/address_bloc.dart';
 import 'package:store_app/features/address/managers/address_event.dart';
 import 'package:store_app/features/address/managers/address_state.dart';
-import 'custom_address_widget.dart';
+import '../widgets/custom_address_widget.dart';
 
 class AddressPage extends StatelessWidget {
   const AddressPage({super.key});
@@ -75,6 +77,9 @@ class AddressPage extends StatelessWidget {
                   SizedBox(height: 12.h),
                   CustomTextButton(
                     title: "Add New Address",
+                    onPressed: (){
+                      context.push(Routes.newAddress);
+                    },
                     backgroundColor: Colors.transparent,
                     borderColor: AppColors.grey,
                     titleColor: AppColors.primary,

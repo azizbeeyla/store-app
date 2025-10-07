@@ -5,6 +5,7 @@ import 'package:store_app/features/account/pages/account_page.dart';
 import 'package:store_app/features/account/pages/faqs_page.dart';
 import 'package:store_app/features/account/pages/help_center_page.dart';
 import 'package:store_app/features/address/pages/address_page.dart';
+import 'package:store_app/features/address/pages/new_address_page.dart';
 import 'package:store_app/features/authentication/managers/auth_view_model.dart';
 import 'package:store_app/features/authentication/pages/forgot_password_page.dart';
 import 'package:store_app/features/authentication/pages/reset_code_page.dart';
@@ -115,6 +116,7 @@ final router = GoRouter(
     GoRoute(path: Routes.myDetail,builder: (context, state) => MyDetailPage(),),
     GoRoute(path: Routes.checkOut,builder: (context, state) => CheckoutPage(),),
     GoRoute(path: Routes.faqPage,builder: (context, state) => FaqPage(),),
+    GoRoute(path: Routes.newAddress,builder: (context, state) => NewAddressPage(),),
 
   ],
 );

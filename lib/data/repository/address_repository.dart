@@ -21,4 +21,20 @@ class AddressRepository {
       },
     );
   }
+
+  Future<Result<AddressModel>> newAddress(AddressModel address) async {
+    final body = {
+      'title': address.title,
+      'fullAddress': address.fullAddress,
+      'lat': address.lat,
+      'lng': address.lng,
+      'isDefault': address.isDefault,
+    };
+    var response = await _apiClient.post('/addresses/create', data: body);
+
+    return response.fold((error) => Result.error(error), (data) {
+      final newAddress = AddressModel.fromJson(Map<String, dynamic>.from(data));
+      return Result.ok(newAddress);
+    });
+  }
 }
