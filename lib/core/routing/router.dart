@@ -1,12 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/features/account/pages/account_page.dart';
 import 'package:store_app/features/account/pages/faqs_page.dart';
 import 'package:store_app/features/account/pages/help_center_page.dart';
 import 'package:store_app/features/address/pages/address_page.dart';
 import 'package:store_app/features/address/pages/new_address_page.dart';
-import 'package:store_app/features/authentication/managers/auth_view_model.dart';
 import 'package:store_app/features/authentication/pages/forgot_password_page.dart';
 import 'package:store_app/features/authentication/pages/reset_code_page.dart';
 import 'package:store_app/features/authentication/pages/reset_password_page.dart';
@@ -47,13 +45,9 @@ final router = GoRouter(
       builder: (context, state) => LoginPage(),
     ),
 
-    ShellRoute(
-      builder: (context, state, child) => ChangeNotifierProvider(
-        create: (context) => AuthViewModel(resetRepo: context.read()),
-        child: child,
-      ),
 
-      routes: [
+
+
         GoRoute(
           path: '${Routes.detail}/:id',
           builder: (context, state) {
@@ -84,8 +78,8 @@ final router = GoRouter(
           path: Routes.savedPage,
           builder: (context, state) => SavedPage(),
         ),
-      ],
-    ),
+
+
     GoRoute(
       path: Routes.notification,
       builder: (context, state) => NotificationPage(),

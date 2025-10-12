@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/app_color.dart';
+import 'package:store_app/data/model/auth_model/reset_password_email.dart';
+import 'package:store_app/features/authentication/managers/auth_event.dart';
 import 'package:store_app/features/authentication/widgets/custom_textfield.dart';
 import 'package:store_app/features/authentication/widgets/text_detail_widget.dart';
 import 'package:store_app/features/common/widgets/appbar_leading.dart';
 import 'package:store_app/features/common/widgets/custom_text_button.dart';
-import '../../../data/model/auth_model/reset_password_email.dart';
-import '../managers/auth_view_model.dart';
+
+import '../managers/auth_bloc.dart';
+import '../managers/auth_state.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -28,71 +31,68 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
-  void _sendCode(AuthViewModel viewModel) async {
+  void _sendCode(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
-      final email = emailController.text.trim();
-      try {
-        await viewModel.fetchForgotEmail(
-          model: ResetPasswordEmailModel(email: email),
-        );
-
-        if (viewModel.emailError == null) {
-          context.push(Routes.resetCode);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(viewModel.emailError!)),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Something went wrong: $e')),
-        );
-      }
+      final model = ResetPasswordEmailModel(email: emailController.text.trim());
+      context.read<AuthBloc>().add(SendForgotEmail(model));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = context.watch<AuthViewModel>();
-
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarLeading(
-        onPressed: () => context.pop(),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextDetailWidget(
-                title: "Forgot password",
-                description:
-                "Enter your email for the verification process. We will send a 4-digit code to your email.",
+      appBar: AppBarLeading(onPressed: () => context.pop()),
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state.errorForgotEmail != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorForgotEmail!)),
+            );
+          } else if (state.isLoadingForgotEmail == false &&
+              state.errorForgotEmail == null &&
+              state.forgotEmail != null) {
+            context.push(Routes.resetCode);
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextDetailWidget(
+                    title: "Forgot password",
+                    description:
+                    "Enter your email for the verification process. We will send a 4-digit code to your email.",
+                  ),
+                  SizedBox(height: 12.h),
+                  CustomTextField(
+                    label: "Email",
+                    hintText: "Enter your email",
+                    controller: emailController,
+                  ),
+                  SizedBox(height: 24.h),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: CustomTextButton(
+                      title: state.isLoadingForgotEmail == true
+                          ? "Sending..."
+                          : "Send Code",
+                      backgroundColor: AppColors.primary,
+                      titleColor: AppColors.white,
+                      onPressed: state.isLoadingForgotEmail == true
+                          ? null
+                          : () => _sendCode(context),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 12.h),
-              CustomTextField(
-                label: "Email",
-                hintText: "Enter Your Email",
-                controller: emailController,
-              ),
-              SizedBox(height: 24.h),
-              SizedBox(
-                width: double.infinity,
-                child: CustomTextButton(
-                  title: authViewModel.isLoadingEmail ? "Sending..." : "Send Code",
-                  backgroundColor: AppColors.primary,
-                  titleColor: AppColors.white,
-                  onPressed: authViewModel.isLoadingEmail
-                      ? null
-                      : () => _sendCode(authViewModel),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -49,7 +49,7 @@ class OnBoardingPage extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 31.0),
+                padding: const EdgeInsets.only(bottom: 31.0,left: 24,right: 24),
                 child: CustomTextButton(
                   onPressed: () {
                     context.go(Routes.signup);

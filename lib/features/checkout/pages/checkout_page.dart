@@ -3,19 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
+import 'package:store_app/core/utils/app_color.dart';
 import 'package:store_app/features/checkout/widgets/address_widget.dart';
 import 'package:store_app/features/checkout/widgets/payment_widget.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
-
 import 'package:store_app/features/common/widgets/custom_text_button.dart';
 import 'package:store_app/features/mycart/managers/my_cart_state.dart';
 import 'package:store_app/features/mycart/widgets/total_item.dart';
-
-import '../../../core/utils/app_color.dart';
+import 'package:store_app/features/checkout/widgets/promocode_widget.dart';
+import 'package:store_app/features/orders/managers/orders_event.dart';
 import '../../address/managers/address_bloc.dart';
 import '../../card/managers/card_bloc.dart';
 import '../../mycart/managers/my_cart_bloc.dart';
-import '../widgets/promocode_widget.dart';
+import '../../orders/managers/orders_bloc.dart';
+import '../../orders/managers/orders_state.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({super.key});
@@ -25,10 +26,30 @@ class CheckoutPage extends StatelessWidget {
     final addressState = context.watch<AddressBloc>().state;
     final cardState = context.watch<CardBloc>().state;
 
-    return Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: CustomAppBarMain(title: "Checkout"),
-        body: BlocBuilder<CartBloc, MyCartState>(
+    return BlocConsumer<OrdersBloc, OrdersState>(
+      listener: (context, state) {
+      if (state.success!) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("✅ Order placed successfully!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+          context.go(Routes.homePage);
+        } else if (state.errorMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage!),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      builder: (context, orderState) {
+        return Scaffold(
+          backgroundColor: AppColors.white,
+          appBar: CustomAppBarMain(title: "Checkout"),
+          body: BlocBuilder<CartBloc, MyCartState>(
             builder: (context, cartState) {
               if (cartState.loading) {
                 return const Center(child: CircularProgressIndicator());
@@ -38,18 +59,19 @@ class CheckoutPage extends StatelessWidget {
                 return Center(child: Text(cartState.errorMessage!));
               }
 
-              final selectedAddress = (addressState.address?.isNotEmpty ?? false)
+              final selectedAddress =
+                  (addressState.address?.isNotEmpty ?? false)
                   ? addressState.address!.firstWhere(
-                    (a) => a.id == addressState.selectedAddressId,
-                orElse: () => addressState.address!.first,
-              )
+                      (a) => a.id == addressState.selectedAddressId,
+                      orElse: () => addressState.address!.first,
+                    )
                   : null;
 
               final selectedCard = (cardState.card?.isNotEmpty ?? false)
                   ? cardState.card!.firstWhere(
-                    (c) => c.id == cardState.selectedCardId,
-                orElse: () => cardState.card!.first,
-              )
+                      (c) => c.id == cardState.selectedCardId,
+                      orElse: () => cardState.card!.first,
+                    )
                   : null;
 
               return SingleChildScrollView(
@@ -57,50 +79,46 @@ class CheckoutPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Row(
-                children: [
-                Text(
-                "Delivery Address",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16.sp,
-                    color: AppColors.primary,
-                    fontFamily: "GeneralSans",
-                  ),
-                ),
-                Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    context.push(Routes.address);
-                  },
-                  child: Text(
-                    "Change",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: AppColors.primary,
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
+                    Row(
+                      children: [
+                        Text(
+                          "Delivery Address",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.sp,
+                            color: AppColors.primary,
+                            fontFamily: "GeneralSans",
+                          ),
+                        ),
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            context.push(Routes.address);
+                          },
+                          child: Text(
+                            "Change",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: AppColors.primary,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                ],
-              ),
-
-              SizedBox(height: 8.h),
-              if (selectedAddress != null)
-              Container(
-              padding: EdgeInsets.all(5.w),
-              decoration: BoxDecoration(
-              border: Border.all(color: AppColors.white),
-              borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: AddressWidget(
-              selectedAddress: selectedAddress,
-              ),
-              ),
-Divider(color: AppColors.primary200,),
-              SizedBox(height: 20.h),
-
+                    SizedBox(height: 8.h),
+                    if (selectedAddress != null)
+                      Container(
+                        padding: EdgeInsets.all(5.w),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.white),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: AddressWidget(selectedAddress: selectedAddress),
+                      ),
+                    Divider(color: AppColors.primary200),
+                    SizedBox(height: 20.h),
 
                     Text(
                       "Payment Method",
@@ -112,10 +130,8 @@ Divider(color: AppColors.primary200,),
                       ),
                     ),
                     SizedBox(height: 8.h),
-
                     if (selectedCard != null)
                       PaymentWidget(selectedCard: selectedCard),
-
                     SizedBox(height: 20.h),
 
                     Text(
@@ -128,44 +144,39 @@ Divider(color: AppColors.primary200,),
                       ),
                     ),
                     SizedBox(height: 12.h),
-
                     TotalItem(item: cartState.cart!),
                     SizedBox(height: 40.h),
-                    Text(
-                      "Order Summary",
-                      style: TextStyle(
-                        fontFamily: "GeneralSans",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.sp,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-
                     PromoCodeWidget(),
-                    SizedBox(height: 65.h),
+                    SizedBox(height: 90.h),
 
                     CustomTextButton(
-                      title: "Place Order",
+                      title: orderState.loading! ? "Placing..." : "Place Order",
                       backgroundColor: AppColors.primary,
                       titleColor: AppColors.white,
-                      onPressed: () {
-                        final addressId = addressState.selectedAddressId;
-                        final cardId = cardState.selectedCardId;
-                        final cart = cartState.cart;
+                      onPressed: orderState.loading!
+                          ? null
+                          : () {
+                              final addressId =
+                                  addressState.selectedAddressId ;
+                              final cardId = cardState.selectedCardId ;
 
-                        debugPrint('Order placed!');
-                        debugPrint('Address ID: $addressId');
-                        debugPrint('Card ID: $cardId');
-                        debugPrint('Cart Total: \$${cart?.total}');
-                      },
+                              context.read<OrdersBloc>().add(
+                                CreateOrdersEvent(
+                                  addressId: addressId!,
+                                  cardId: cardId!,
+                                  paymentMethod: "Card",
+                                ),
+                              );
+                            },
                     ),
                     SizedBox(height: 20.h),
                   ],
                 ),
               );
             },
-        ),
+          ),
+        );
+      },
     );
   }
 }

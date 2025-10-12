@@ -7,6 +7,7 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
   final bool isPassword;
   final TextEditingController controller;
+  final String? Function(String?)? externalValidator; // <- qo‘shildi
 
   const CustomTextField({
     super.key,
@@ -14,8 +15,8 @@ class CustomTextField extends StatefulWidget {
     required this.hintText,
     this.isPassword = false,
     required this.controller,
+    this.externalValidator,
   });
-
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -37,6 +38,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
         return 'Please enter valid email address';
       }
+    }
+
+    // external validator bo‘lsa ishlat
+    if (widget.externalValidator != null) {
+      return widget.externalValidator!(value);
     }
 
     return null;
@@ -109,9 +115,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               suffixIcon: widget.isPassword
                   ? IconButton(
                 icon: Icon(
-                  obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+                  obscureText ? Icons.visibility_off : Icons.visibility,
                   color: AppColors.hintColor,
                 ),
                 onPressed: () {
@@ -128,3 +132,4 @@ class _CustomTextFieldState extends State<CustomTextField> {
     );
   }
 }
+

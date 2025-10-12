@@ -14,13 +14,11 @@ class NewAddressPage extends StatefulWidget {
   @override
   State<NewAddressPage> createState() => _NewAddressPageState();
 }
-
 class _NewAddressPageState extends State<NewAddressPage>
     with TickerProviderStateMixin {
   final controller = MapController();
   LatLng? currentCenter;
   String fullAddress = '';
-
   @override
   void initState() {
     super.initState();
@@ -36,7 +34,6 @@ class _NewAddressPageState extends State<NewAddressPage>
       currentCenter = point;
     });
   }
-
   Future<void> _getAddressFromLatLng(LatLng point) async {
     try {
       final placemarks = await placemarkFromCoordinates(
@@ -56,7 +53,6 @@ class _NewAddressPageState extends State<NewAddressPage>
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +62,7 @@ class _NewAddressPageState extends State<NewAddressPage>
       appBar: CustomAppBarMain(title: 'New Address'),
 
       body: currentCenter == null
-          ? const Center(child: CircularProgressIndicator())
+          ?  Center(child: CircularProgressIndicator())
           : FlutterMap(
               mapController: controller,
               options: MapOptions(
@@ -79,7 +75,7 @@ class _NewAddressPageState extends State<NewAddressPage>
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
-                      backgroundColor: Colors.white,
+                      backgroundColor: AppColors.white,
                       shape:  RoundedRectangleBorder(
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(20),

@@ -26,7 +26,7 @@ class NewAddressBottomSheet extends StatefulWidget {
 }
 
 class _NewAddressBottomSheetState extends State<NewAddressBottomSheet> {
-  final TextEditingController nicknameController = TextEditingController();
+  final  nicknameController = TextEditingController();
   bool isDefault = false;
 
   @override
