@@ -9,11 +9,9 @@ abstract  class AuthState with _$AuthState {
     bool? isLoginLoading,
     String? loginError,
     bool? loginSuccess,
-
     bool? isSignupLoading,
     String? signupError,
     bool? signupSuccess,
-
     bool? isLoadingForgotEmail,
     bool? isLoadingVerifyCode,
     bool? isLoadingResetPassword,
@@ -22,12 +20,10 @@ abstract  class AuthState with _$AuthState {
     String? errorResetPassword,
     String? forgotEmail,
     String? forgotCode,
-
     UserModel? user,
   }) = _AuthState;
 
   factory AuthState.initial() => const AuthState(
-    // LOGIN
     isLoginLoading: false,
     loginError: null,
     loginSuccess: false,

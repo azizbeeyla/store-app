@@ -1,19 +1,15 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 class AuthInterceptor extends Interceptor {
   final FlutterSecureStorage secureStorage;
-
   AuthInterceptor({required this.secureStorage});
-
   final dio = Dio(
     BaseOptions(
-      baseUrl: "http://192.168.0.103:8888/api/v1",
+      baseUrl: "http://192.168.10.191:8888/api/v1",
       validateStatus: (status) => true,
     ),
   );
-
   @override
   void onRequest(
       RequestOptions options,
@@ -26,36 +22,29 @@ class AuthInterceptor extends Interceptor {
     }
     handler.next(options);
   }
-
   @override
   void onResponse(
       Response response,
       ResponseInterceptorHandler handler,
       ) async {
-
     if (response.statusCode == 401) {
       var login = await secureStorage.read(key: "login");
       var password = await secureStorage.read(key: "password");
-
       if (login == null || password == null) {
         await logout();
         return;
       }
-
       var result = await dio.post(
         "/auth/login",
         data: {"login": login, "password": password},
       );
-
       String? token = result.data['accessToken'];
 
       if (result.statusCode != 200 || token == null) {
         await logout();
         return;
       }
-
       await secureStorage.write(key: "token", value: token);
-
       final headers = response.requestOptions.headers;
       headers["Authorization"] = "Bearer $token";
 
@@ -68,12 +57,10 @@ class AuthInterceptor extends Interceptor {
           headers: headers,
         ),
       );
-
       if (retry.statusCode != 200) {
         await logout();
         return;
       }
-
       print("Response qayta yuborildi va muvaffaqiyatli bo‘ldi");
       handler.next(retry);
     } else {
@@ -81,13 +68,11 @@ class AuthInterceptor extends Interceptor {
       handler.next(response);
     }
   }
-
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
 
     handler.next(err);
   }
-
   Future<void> logout() async {
     await secureStorage.delete(key: "token");
     await secureStorage.delete(key: "login");

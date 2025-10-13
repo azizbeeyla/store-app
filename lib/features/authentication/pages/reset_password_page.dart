@@ -25,10 +25,17 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(() => setState(() {}));
+    _confirmController.addListener(() => setState(() {}));
+  }
+
   bool get _isValid =>
       _passwordController.text.isNotEmpty &&
-          _passwordController.text.length >= 6 &&
-          _passwordController.text == _confirmController.text;
+      _passwordController.text.length >= 6 &&
+      _passwordController.text == _confirmController.text;
 
   @override
   void dispose() {
@@ -43,7 +50,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       backgroundColor: AppColors.white,
       appBar: AppBarLeading(onPressed: () => context.pop()),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h, ),
+        padding: EdgeInsets.symmetric(
+          vertical: 16.h,
+        ),
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state.errorResetPassword != null) {
@@ -64,39 +73,35 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 TextDetailWidget(
                   title: "Reset Password",
                   description:
-                  "Enter your new password and confirm it to reset your account password.",
+                      "Enter your new password and confirm it to reset your account password.",
                 ),
                 const SizedBox(height: 24),
                 Form(
                   key: _formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          controller: _passwordController,
-                            label: "New Password",
-                          isPassword: true,
-                          hintText: '',
-
-
-                        ),
-                        const SizedBox(height: 16),
-                        CustomTextField(
-                          controller: _confirmController,
-                            label: "Confirm Password",
-                          hintText: '12345678',
-                          isPassword: true,
-                          externalValidator: (val) {
-                            if (val != _passwordController.text) return "Passwords do not match";
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        controller: _passwordController,
+                        label: "New Password",
+                        isPassword: true,
+                        hintText: '',
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        controller: _confirmController,
+                        label: "Confirm Password",
+                        hintText: '12345678',
+                        isPassword: true,
+                        externalValidator: (val) {
+                          if (val != _passwordController.text)
+                            return "Passwords do not match";
+                          return null;
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                 Spacer(),
+                Spacer(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: CustomTextButton(
@@ -105,23 +110,26 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         : "Reset Password",
                     backgroundColor: AppColors.primary,
                     titleColor: AppColors.white,
-                    onPressed: !_isValid || (state.isLoadingResetPassword ?? false)
+                    onPressed:
+                        !_isValid || (state.isLoadingResetPassword ?? false)
                         ? null
                         : () {
-                      final email = state.forgotEmail;
-                      final code = state.forgotCode;
-                      if (email != null && code != null) {
-                        context.read<AuthBloc>().add(
-                          ResetForgotPassword(
-                            ResetPasswordResetModel(
-                              email: email,
-                              code: code,
-                              password: _passwordController.text,
-                            ),
-                          ),
-                        );
-                      }
-                    },
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final email = state.forgotEmail;
+                              final code = state.forgotCode;
+                              if (email != null && code != null) {
+                                context.read<AuthBloc>().add(
+                                  ResetForgotPassword(
+                                    ResetPasswordResetModel(
+                                      email: email,
+                                      code: code,
+                                      password: _passwordController.text,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          },
                   ),
                 ),
               ],

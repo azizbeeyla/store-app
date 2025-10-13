@@ -15,7 +15,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<VerifyForgotCode>(_onVerifyForgotCode);
     on<ResetForgotPassword>(_onResetForgotPassword);
   }
-
   Future<void> _onLoginRequested(
       LoginRequested event, Emitter<AuthState> emit) async {
     emit(state.copyWith(
@@ -23,9 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       loginError: null,
       loginSuccess: false,
     ));
-
     final result = await _authRepo.login(event.loginModel);
-
     result.fold(
           (err) => emit(state.copyWith(
         isLoginLoading: false,
@@ -38,7 +35,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       )),
     );
   }
-
   Future<void> _onRegisterRequested(
       RegisterRequested event, Emitter<AuthState> emit) async {
     emit(state.copyWith(
@@ -46,9 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       signupError: null,
       signupSuccess: false,
     ));
-
     final result = await _authRepo.register(event.registerModel);
-
     result.fold(
           (err) => emit(state.copyWith(
         isSignupLoading: false,
@@ -61,16 +55,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       )),
     );
   }
-
   Future<void> _onSendForgotEmail(
       SendForgotEmail event, Emitter<AuthState> emit) async {
     emit(state.copyWith(
       isLoadingForgotEmail: true,
       errorForgotEmail: null,
     ));
-
     final result = await _authRepo.forgotPasswordEmail(data: event.model);
-
     result.fold(
           (err) => emit(state.copyWith(
         isLoadingForgotEmail: false,
@@ -89,9 +80,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       isLoadingVerifyCode: true,
       errorVerifyCode: null,
     ));
-
     final result = await _authRepo.forgotPasswordVerify(data: event.model);
-
     result.fold(
           (err) => emit(state.copyWith(
         isLoadingVerifyCode: false,
@@ -103,16 +92,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       )),
     );
   }
-
   Future<void> _onResetForgotPassword(
       ResetForgotPassword event, Emitter<AuthState> emit) async {
     emit(state.copyWith(
       isLoadingResetPassword: true,
       errorResetPassword: null,
     ));
-
     final result = await _authRepo.forgotPasswordReset(data: event.model);
-
     result.fold(
           (err) => emit(state.copyWith(
         isLoadingResetPassword: false,
