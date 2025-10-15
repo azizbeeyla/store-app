@@ -10,7 +10,6 @@ import '../../../core/utils/app_color.dart';
 import '../widgets/logout_dialog.dart';
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +18,10 @@ class AccountPage extends StatelessWidget {
       body: Column(
         children: [
           CustomRowAccount(
+            onPressed: (){
+
+              context.push(Routes.orderPage);
+            },
             svgICon: 'assets/Box.svg',
             title: 'My Orders',
           ),
@@ -85,6 +88,7 @@ class AccountPage extends StatelessWidget {
 
             svgICon: "assets/Headphones.svg",
             title: "Help Center",
+
           ),
           SizedBox(
             height: 25.h,
@@ -117,7 +121,7 @@ class AccountPage extends StatelessWidget {
                       color: Colors.red,
                       fontWeight: FontWeight.w400,
                       fontFamily: "GeneralSans",
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
                 ],
@@ -130,3 +134,4 @@ class AccountPage extends StatelessWidget {
     );
   }
 }
+

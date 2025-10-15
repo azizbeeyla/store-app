@@ -17,23 +17,30 @@ class FaqPage extends StatefulWidget {
 
 class _FaqPageState extends State<FaqPage> {
   int selectedIndex = 0;
-  final categories = ["General", "Account", "Service", "Payment"];
+  final categories = [
+    "Gener"
+        "al",
+    "Account",
+    "Service",
+    "Payment",
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar:  CustomAppBarMain(title: "FAQs"),
+      appBar: CustomAppBarMain(title: "FAQs"),
       body: Padding(
-        padding:  EdgeInsets.only(left: 24, top: 16, right: 25),
+        padding: EdgeInsets.only(left: 24, top: 16, right: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            Divider(color: AppColors.primary100,),
-            SizedBox(height: 24.h,),
-
-
+            Divider(
+              color: AppColors.primary100,
+            ),
+            SizedBox(
+              height: 24.h,
+            ),
             SizedBox(
               height: 40.h,
               child: ListView.separated(
@@ -62,7 +69,7 @@ class _FaqPageState extends State<FaqPage> {
               child: ListView.separated(
                 itemCount: _faqList.length,
                 separatorBuilder: (context, index) =>
-                const SizedBox(height: 14),
+                    const SizedBox(height: 14),
                 itemBuilder: (context, index) {
                   final item = _faqList[index];
                   return Container(
@@ -90,26 +97,26 @@ final List<Map<String, String>> _faqList = [
   {
     'question': 'How do I make a purchase?',
     'answer':
-    'When you find a product you want to purchase, tap on it to view the product details. Check the price, description, and available options (if applicable), and then tap the “Add to Cart” button. Follow the on-screen instructions to complete the purchase, including providing shipping details and payment information.',
+        'When you find a product you want to purchase, tap on it to view the product details. Check the price, description, and available options (if applicable), and then tap the “Add to Cart” button. Follow the on-screen instructions to complete the purchase, including providing shipping details and payment information.',
   },
   {
     'question': 'What payment methods are accepted?',
     'answer':
-    'We accept credit/debit cards, PayPal, and other secure payment options.',
+        'We accept credit/debit cards, PayPal, and other secure payment options.',
   },
   {
     'question': 'How do I track my orders?',
     'answer':
-    'You can track your orders from your account page under the “My Orders” section.',
+        'You can track your orders from your account page under the “My Orders” section.',
   },
   {
     'question': 'Can I cancel or return an order?',
     'answer':
-    'Yes, you can cancel or return an order within 7 days if it meets our return policy requirements.',
+        'Yes, you can cancel or return an order within 7 days if it meets our return policy requirements.',
   },
   {
     'question': 'How can I contact customer support for assistance?',
     'answer':
-    'You can reach our support team through the “Contact Us” section or by emailing support@example.com.',
+        'You can reach our support team through the “Contact Us” section or by emailing support@example.com.',
   },
 ];

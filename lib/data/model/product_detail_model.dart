@@ -51,8 +51,8 @@ class ProductImage {
 
   factory ProductImage.fromJson(Map<String, dynamic> json) {
     return ProductImage(
-      id: json['id'] ?? 0,
-      image: json['image'] ?? '',
+      id: json['id'] ,
+      image: json['image'] ,
     );
   }
 }
@@ -68,8 +68,8 @@ class ProductSize {
 
   factory ProductSize.fromJson(Map<String, dynamic> json) {
     return ProductSize(
-      id: json['id'] ?? 0,
-      title: json['title'] ?? '',
+      id: json['id'] ,
+      title: json['title'] ,
     );
   }
 }

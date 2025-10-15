@@ -8,7 +8,7 @@ class AddressRepository {
   AddressRepository({required ApiClient apiClient}) : _apiClient = apiClient;
 
   Future<Result<List<AddressModel>>> getAddressList() async {
-    var response = await _apiClient.get('/addresses/list');
+    var response = await _apiClient.get('/addresses');
 
     return response.fold(
       (error) => Result.error(error),
@@ -24,13 +24,13 @@ class AddressRepository {
 
   Future<Result<AddressModel>> newAddress(AddressModel address) async {
     final body = {
-      'title': address.title,
+      'nickname': address.title,
       'fullAddress': address.fullAddress,
       'lat': address.lat,
       'lng': address.lng,
       'isDefault': address.isDefault,
     };
-    var response = await _apiClient.post('/addresses/create', data: body);
+    var response = await _apiClient.post('/addresses', data: body);
 
     return response.fold((error) => Result.error(error), (data) {
       final newAddress = AddressModel.fromJson(Map<String, dynamic>.from(data));

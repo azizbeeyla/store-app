@@ -66,7 +66,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       },
     );
   }
-
   Future<void> _onSearchProducts(
     SearchProducts event,
     Emitter<ProductState> emit,

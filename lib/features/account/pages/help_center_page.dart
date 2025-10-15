@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/features/account/widgets/custom_help_widget.dart';
 import 'package:store_app/features/common/widgets/custom_appbar_main.dart';
 import 'package:store_app/features/common/widgets/custom_botttom_navigation.dart';
@@ -19,6 +21,9 @@ class HelpCenterPage extends StatelessWidget {
             color: AppColors.primary100,
           ),
           CustomHelpWidget(
+onPressed: (){
+  context.push(Routes.chat);
+},
             svgIcon: 'assets/Headphones.svg',
             text: 'Customer Service',
           ),

@@ -22,9 +22,7 @@ class DetailCubit extends Cubit<DetailState> {
 
   Future<void> fetchProductDetail(int productId) async {
     emit(state.copyWith(loading: true, errorMessage: null));
-
     final result = await _productRepo.getDetail(productId);
-
     result.fold(
           (err) => emit(
         state.copyWith(

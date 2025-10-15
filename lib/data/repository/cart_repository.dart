@@ -9,32 +9,32 @@ class CartRepository {
 
   Future<Result<String>> addToCart({
     required int productId,
-    required int sizeId,
+    required int sizeId
   }) async {
     final response = await _apiClient.post(
-      "/my-cart/add-item",
+      "/cart-items",
       data: {
         "productId": productId,
-        "sizeId": sizeId,
+        "sizeId": sizeId
       },
     );
 
     return response.fold(
-          (error) => Result.error(error),
-          (data) {
+      (error) => Result.error(error),
+      (data) {
         return Result.ok(data);
       },
     );
   }
 
   Future<Result<CartModel>> getCartList() async {
-    final response = await _apiClient.get('/my-cart/my-cart-items');
+    final response = await _apiClient.get('/cart-items');
 
     return response.fold(
-          (error) {
+      (error) {
         return Result.error(error);
       },
-          (data) {
+      (data) {
         if (data is Map<String, dynamic>) {
           final cart = CartModel.fromJson(data);
           return Result.ok(cart);
@@ -44,14 +44,12 @@ class CartRepository {
     );
   }
 
-  Future<Result<String>> removeFromCart({
-    required int id,
-  }) async {
-    final response = await _apiClient.delete("/my-cart/delete/$id");
+  Future<Result> removeFromCart({required int id}) async {
+    final response = await _apiClient.delete("/cart-items/$id");
 
     return response.fold(
-          (error) => Result.error(error),
-          (data) {
+      (error) => Result.error(error),
+      (data) {
         return Result.ok(data);
       },
     );

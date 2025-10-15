@@ -23,5 +23,8 @@ class Routes{
   static const  checkOut='/checkOut';
   static const  faqPage='/faqPage';
   static const  newAddress='/newAddress';
+  static const  orderPage='/orderPage';
+  static const  chat='/chatPage';
+
 
 }

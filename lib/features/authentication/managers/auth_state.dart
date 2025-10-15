@@ -27,7 +27,6 @@ abstract  class AuthState with _$AuthState {
     isLoginLoading: false,
     loginError: null,
     loginSuccess: false,
-
     isSignupLoading: false,
     signupError: null,
     signupSuccess: false,

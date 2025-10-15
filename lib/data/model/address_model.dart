@@ -18,7 +18,7 @@ class AddressModel {
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
       id: json['id'],
-      title: json['title']??"",
+      title: json['nickname']??"",
       fullAddress: json['fullAddress']??"",
       lat: json['lat']??0,
       lng: json['lng']??0,

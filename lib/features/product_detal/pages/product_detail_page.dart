@@ -24,55 +24,53 @@ class ProductDetailPage extends StatelessWidget {
         reviewRepository: context.read(),
         productRepo: context.read(),
       )..fetchProductDetail(productId),
-      child: BlocListener<DetailCubit, DetailState>(
-        listenWhen: (prev, curr) =>
-        prev.cartSuccess != curr.cartSuccess ||
-            prev.errorMessage != curr.errorMessage,
-        listener: (context, state) {
-          if (state.cartSuccess == true) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Mahsulot savatchaga qo‘shildi ✅"),
-                backgroundColor: Colors.green,
-              ),
+      child: BlocBuilder<DetailCubit, DetailState>(
+        builder: (context, state) {
+          if (state.loading) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             );
           }
 
-          if (state.cartSuccess == false &&
-              state.errorMessage != null &&
-              state.errorMessage!.isNotEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
-        },
-        child: BlocBuilder<DetailCubit, DetailState>(
-          builder: (context, state) {
-            if (state.loading) {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
-            }
-
-            if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
-              return Scaffold(
-                appBar: CustomAppBarMain(title: "Details"),
-                body: Center(
-                  child: Text(
-                    state.errorMessage!,
-                    style: const TextStyle(color: Colors.red, fontSize: 16),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              );
-            }
-
-            final detail = state.detail;
-
+          if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
             return Scaffold(
+              appBar: CustomAppBarMain(title: "Details"),
+              body: Center(
+                child: Text(
+                  state.errorMessage!,
+                  style: const TextStyle(color: Colors.red, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
+
+          final detail = state.detail;
+
+          return BlocListener<DetailCubit, DetailState>(
+            listenWhen: (prev, curr) =>
+            prev.cartSuccess != curr.cartSuccess ||
+                prev.errorMessage != curr.errorMessage,
+            listener: (context, state) {
+              if (state.cartSuccess == true) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Mahsulot savatchaga qo‘shildi ✅"),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              } else if (state.cartSuccess == false &&
+                  state.errorMessage != null &&
+                  state.errorMessage!.isNotEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.errorMessage!),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+            },
+            child: Scaffold(
               backgroundColor: AppColors.white,
               appBar: CustomAppBarMain(title: "Details"),
               body: Column(
@@ -110,9 +108,9 @@ class ProductDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

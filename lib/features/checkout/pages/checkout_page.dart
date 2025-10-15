@@ -11,24 +11,21 @@ import 'package:store_app/features/common/widgets/custom_text_button.dart';
 import 'package:store_app/features/mycart/managers/my_cart_state.dart';
 import 'package:store_app/features/mycart/widgets/total_item.dart';
 import 'package:store_app/features/checkout/widgets/promocode_widget.dart';
-import 'package:store_app/features/orders/managers/orders_event.dart';
+import 'package:store_app/features/orders/managers/order_event.dart';
 import '../../address/managers/address_bloc.dart';
 import '../../card/managers/card_bloc.dart';
 import '../../mycart/managers/my_cart_bloc.dart';
-import '../../orders/managers/orders_bloc.dart';
-import '../../orders/managers/orders_state.dart';
-
+import '../../orders/managers/order_bloc.dart';
+import '../../orders/managers/order_state.dart';
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     final addressState = context.watch<AddressBloc>().state;
     final cardState = context.watch<CardBloc>().state;
-
-    return BlocConsumer<OrdersBloc, OrdersState>(
+    return BlocConsumer<OrderBloc, OrderState>(
       listener: (context, state) {
-      if (state.success!) {
+      if (state.createSuccess!) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("✅ Order placed successfully!"),
@@ -36,10 +33,10 @@ class CheckoutPage extends StatelessWidget {
             ),
           );
           context.go(Routes.homePage);
-        } else if (state.errorMessage != null) {
+        } else if (state.createError != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage!),
+              content: Text(state.createError!),
               backgroundColor: Colors.red,
             ),
           );
@@ -150,18 +147,18 @@ class CheckoutPage extends StatelessWidget {
                     SizedBox(height: 90.h),
 
                     CustomTextButton(
-                      title: orderState.loading! ? "Placing..." : "Place Order",
+                      title: orderState.isCreateLoad! ? "Placing..." : "Place Order",
                       backgroundColor: AppColors.primary,
                       titleColor: AppColors.white,
-                      onPressed: orderState.loading!
+                      onPressed: orderState.isCreateLoad!
                           ? null
                           : () {
                               final addressId =
                                   addressState.selectedAddressId ;
                               final cardId = cardState.selectedCardId ;
 
-                              context.read<OrdersBloc>().add(
-                                CreateOrdersEvent(
+                              context.read<OrderBloc>().add(
+                                PlaceOrderEvent(
                                   addressId: addressId!,
                                   cardId: cardId!,
                                   paymentMethod: "Card",

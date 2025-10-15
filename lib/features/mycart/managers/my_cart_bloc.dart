@@ -19,7 +19,6 @@ class CartBloc extends Bloc<MyCartEvent, MyCartState> {
       Emitter<MyCartState> emit,
       ) async {
     emit(state.copyWith(loading: true, errorMessage: null));
-
     final result = await _repository.getCartList();
 
     result.fold(
@@ -39,7 +38,6 @@ class CartBloc extends Bloc<MyCartEvent, MyCartState> {
       Emitter<MyCartState> emit,
       ) async {
     emit(state.copyWith(loading: true, errorMessage: null));
-
     final result = await _repository.addToCart(
       productId: event.productId,
       sizeId: event.sizeId,

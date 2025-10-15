@@ -11,6 +11,7 @@ import 'package:store_app/features/authentication/pages/reset_password_page.dart
 import 'package:store_app/features/authentication/pages/sign_up_page.dart';
 import 'package:store_app/features/card/pages/new_card_page.dart';
 import 'package:store_app/features/card/pages/payment_card_page.dart';
+import 'package:store_app/features/chat/pages/chat_page.dart';
 import 'package:store_app/features/checkout/pages/checkout_page.dart';
 import 'package:store_app/features/home/pages/home_page.dart';
 import 'package:store_app/features/home/pages/search_page.dart';
@@ -20,6 +21,7 @@ import 'package:store_app/features/notification/pages/notification_page.dart';
 import 'package:store_app/features/notification/pages/notification_settings_page.dart';
 import 'package:store_app/features/onboarding/pages/on_boarding_page.dart';
 import 'package:store_app/features/onboarding/pages/splash_page.dart';
+import 'package:store_app/features/orders/pages/order_page.dart';
 import 'package:store_app/features/saved/pages/saved_page.dart';
 
 import '../../features/authentication/pages/login_page.dart';
@@ -111,6 +113,8 @@ final router = GoRouter(
     GoRoute(path: Routes.checkOut,builder: (context, state) => CheckoutPage(),),
     GoRoute(path: Routes.faqPage,builder: (context, state) => FaqPage(),),
     GoRoute(path: Routes.newAddress,builder: (context, state) => NewAddressPage(),),
+    GoRoute(path: Routes.orderPage,builder: (context, state) => OrderPage(),),
+    GoRoute(path: Routes.chat,builder: (context, state) => ChatPage(),),
 
   ],
 );

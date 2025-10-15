@@ -66,6 +66,7 @@ class AuthInterceptor extends Interceptor {
     } else {
       print("Response muvaffaqiyatli");
       handler.next(response);
+      handler.next(response);
     }
   }
   @override

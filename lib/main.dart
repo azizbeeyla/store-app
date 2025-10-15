@@ -20,13 +20,11 @@ import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/reset_repository.dart';
 import 'package:store_app/data/repository/review_repository.dart';
 import 'package:store_app/data/repository/user_repository.dart';
-
 import 'package:store_app/features/address/managers/address_bloc.dart';
+import 'package:store_app/features/chat/managers/chat_bloc.dart';
 import 'package:store_app/features/home/managers/product_bloc.dart';
 import 'package:store_app/features/home/managers/product_event.dart';
 import 'package:store_app/features/my_detail/managers/user_bloc.dart';
-import 'package:store_app/features/orders/managers/orders_bloc.dart';
-
 import 'package:store_app/firebase_options.dart';
 import 'core/client/dio_client.dart';
 import 'core/interceptor.dart';
@@ -37,7 +35,7 @@ import 'features/card/managers/card_bloc.dart';
 import 'features/home/managers/category_cubit.dart';
 import 'features/mycart/managers/my_cart_bloc.dart';
 import 'features/mycart/managers/my_cart_event.dart';
-
+import 'features/orders/managers/order_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -155,8 +153,14 @@ class StoreApp extends StatelessWidget {
                   ),
                   BlocProvider(
                     create: (context) =>
-                        OrdersBloc(orderRepository: context.read()),
+                        OrderBloc(orderRepo: context.read()),
                   ),
+                  BlocProvider(
+                    create: (context) =>
+                        ChatBloc(),
+                  ),
+
+
                 ],
                 child: MaterialApp.router(
                   debugShowCheckedModeBanner: false,

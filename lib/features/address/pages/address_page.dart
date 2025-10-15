@@ -16,32 +16,53 @@ class AddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      extendBody: true,
-      appBar: const CustomAppBarMain(title: "Address"),
-      body: BlocBuilder<AddressBloc, AddressState>(
-        builder: (context, state) {
-          if (state.loading == true) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    return BlocBuilder<AddressBloc, AddressState>(
+      builder: (context, state) {
+        if (state.loading == true) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
 
-          if (state.errorMessage != null) {
-            return Center(
+        if (state.errorMessage != null) {
+          return Scaffold(
+            appBar: const CustomAppBarMain(title: "Address"),
+            body: Center(
               child: Text(
                 state.errorMessage!,
                 style: const TextStyle(color: Colors.red),
               ),
-            );
-          }
+            ),
+          );
+        }
 
-          final addresses = state.address ?? [];
+        final addresses = state.address ?? [];
 
-          if (addresses.isEmpty) {
-            return const Center(child: Text("No saved address"));
-          }
+        return Scaffold(
+          backgroundColor: AppColors.white,
+          extendBody: true,
+          appBar: const CustomAppBarMain(title: "Address"),
 
-          return SingleChildScrollView(
+          /// BODY
+          body: addresses.isEmpty
+              ? Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.location_off_outlined,
+                      size: 60, color: Colors.grey),
+                  SizedBox(height: 12.h),
+                  const Text(
+                    "No saved address",
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                ],
+              ),
+            ),
+          )
+              : SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 100.h),
               child: Column(
@@ -61,20 +82,18 @@ class AddressPage extends StatelessWidget {
                   Column(
                     children: List.generate(addresses.length, (index) {
                       final address = addresses[index];
-
                       return AddressWidget(
                         address: address,
                         selectedId: state.selectedAddressId,
                         onSelected: (id) {
-                          context.read<AddressBloc>().add(
-                            SelectAddressEvent(id),
-                          );
+                          context
+                              .read<AddressBloc>()
+                              .add(SelectAddressEvent(id));
                         },
                       );
                     }),
                   ),
-
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 12.h,),
                   CustomTextButton(
                     title: "Add New Address",
                     onPressed: (){
@@ -85,34 +104,44 @@ class AddressPage extends StatelessWidget {
                     titleColor: AppColors.primary,
                     leftIcon: 'assets/Plus.svg',
                   ),
+
                 ],
               ),
             ),
-          );
-        },
-      ),
+          ),
 
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        height: 86.h,
-        color: AppColors.white,
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: CustomTextButton(
-          title: 'Apply',
-          backgroundColor: AppColors.primary,
-          titleColor: AppColors.white,
-          onPressed: () {
-            final selectedId = context
-                .read<AddressBloc>()
-                .state
-                .selectedAddressId;
-            if (selectedId != null) {
-              debugPrint('Applying address id: $selectedId');
-            }
-          },
-        ),
-      ),
+          bottomNavigationBar: Container(
+            width: double.infinity,
+            height: 86.h,
+            color: AppColors.white,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: addresses.isEmpty
+                ? CustomTextButton(
+              title: "Add New Address",
+              onPressed: () {
+                context.push(Routes.newAddress);
+              },
+              backgroundColor: Colors.transparent,
+              borderColor: AppColors.grey,
+              titleColor: AppColors.primary,
+              leftIcon: 'assets/Plus.svg',
+            )
+                : CustomTextButton(
+              title: 'Apply',
+              backgroundColor: AppColors.primary,
+              titleColor: AppColors.white,
+              onPressed: () {
+                final selectedId =
+                    context.read<AddressBloc>().state.selectedAddressId;
+                if (selectedId != null) {
+                  debugPrint('Applying address id: $selectedId');
+                }
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
